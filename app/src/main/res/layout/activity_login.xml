@@ -95,6 +95,11 @@
                     android:drawableStart="@drawable/icon_password"
 
                     />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show Passwrd"
+                    android:id="@+id/CBshowpasswordLOGIN"/>
 
                 <!-- Login Button -->
                 <androidx.appcompat.widget.AppCompatButton

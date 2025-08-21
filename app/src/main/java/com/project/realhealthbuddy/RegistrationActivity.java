@@ -1,7 +1,9 @@
 package com.project.realhealthbuddy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
@@ -18,11 +20,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.project.realhealthbuddy.comman.DBhelper;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     EditText etName,etMobileNo, etEmailID,etUsername,etPassword;
     AppCompatButton btnRegister;
     CheckBox cbShowHidePassword;
+    DBhelper dBhelper;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,10 @@ public class RegistrationActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etRegisterPassword);
         cbShowHidePassword = findViewById(R.id.cbshowhidepassword);
         btnRegister = findViewById(R.id.btnRegisterCreateAccount);
+
+        dBhelper=new DBhelper(this);
+        preferences= PreferenceManager.getDefaultSharedPreferences(this);
+        editor=preferences.edit();
 
 
         cbShowHidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -82,10 +93,29 @@ public class RegistrationActivity extends AppCompatActivity {
                     etPassword.setError("Please Enter Your Password");
 
                 } else {
-                    Toast.makeText(RegistrationActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+                    String name= etName.getText().toString();
+                    String mobile= etName.getText().toString();
+                    String email= etName.getText().toString();
+                    String username= etName.getText().toString();
+                    String password = etName.getText().toString();
 
-                    Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                    startActivity(intent);
+
+                    boolean inserted = dBhelper.registeruser(name, mobile, email, username, password);
+                    if (inserted) {
+                        editor.putString("name", name);
+                        editor.putString("mobileno",  mobile);
+                        editor.putString("email", email);
+                        editor.putString("username", username);
+                        editor.putString("password", password);
+                        editor.putBoolean("islogin", true);
+                        editor.apply();
+
+                        Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }

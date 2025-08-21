@@ -1,6 +1,11 @@
 package com.project.realhealthbuddy;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -22,12 +27,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     FrameLayout frameLayout;
     BottomNavigationView bottomNavigationView;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        preferences= PreferenceManager.getDefaultSharedPreferences(this);
+        editor=preferences.edit();
 
         bottomNavigationView = findViewById(R.id.homeBottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.homebottommenuHome);
@@ -61,4 +71,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         return true;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu_actionbar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==R.id.logoutMenu)
+        {
+            Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+            editor.putBoolean("islogin",false).commit();
+
+        }
+        return true;
+    }
+
+
 }
