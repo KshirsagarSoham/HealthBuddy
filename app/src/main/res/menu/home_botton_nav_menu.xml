@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homebottommenuHome"
+        android:title="Home"
+        app:showAsAction="never"
+        android:icon="@drawable/icon_home"
+    />
+
+    <item
+        android:id="@+id/homebottommenuMedicine"
+        android:title="Medicine"
+        app:showAsAction="never"
+        android:icon="@drawable/medicine"
+    />
+
+    <item
+        android:id="@+id/homebottommenuMeditation"
+        android:title="Meditation"
+        app:showAsAction="never"
+        android:icon="@drawable/meditation"
+    />
+
+    <item
+        android:id="@+id/homebottommenuHistory"
+        android:title="History"
+        app:showAsAction="never"
+        android:icon="@drawable/icon_history"
+    />
+
+
+</menu>
