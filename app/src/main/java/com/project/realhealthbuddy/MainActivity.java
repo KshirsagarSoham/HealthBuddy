@@ -21,6 +21,7 @@ import com.project.realhealthbuddy.Fragments.HistoryFragment;
 import com.project.realhealthbuddy.Fragments.HomeFragment;
 import com.project.realhealthbuddy.Fragments.MedicineFragment;
 import com.project.realhealthbuddy.Fragments.MeditationFragment;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.
         OnNavigationItemSelectedListener {
@@ -36,12 +37,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Zenith Health");
+
         preferences= PreferenceManager.getDefaultSharedPreferences(this);
         editor=preferences.edit();
 
         bottomNavigationView = findViewById(R.id.homeBottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.homebottommenuHome);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        if (savedInstanceState == null) {  // prevent overlapping on rotation
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.homeframelayout, new HomeFragment())
+                    .commit();
+        }
     }
 
     HomeFragment homeFragment = new HomeFragment();

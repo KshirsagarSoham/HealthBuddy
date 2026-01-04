@@ -50,6 +50,8 @@ public class RegistrationActivity extends AppCompatActivity {
         editor=preferences.edit();
 
 
+
+
         cbShowHidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -120,6 +122,10 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+
+        String fullname = etUsername.getText().toString().trim();
+        editor.putString("username",fullname);
+        editor.apply();
 
     }
 }

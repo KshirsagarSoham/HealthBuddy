@@ -9,6 +9,14 @@
     android:orientation="vertical"
     android:weightSum="100">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#8091F4"
+        app:title="Real Health Buddy"
+        app:titleTextColor="@android:color/white" />
+
    <FrameLayout
        android:layout_width="match_parent"
        android:layout_height="0dp"
