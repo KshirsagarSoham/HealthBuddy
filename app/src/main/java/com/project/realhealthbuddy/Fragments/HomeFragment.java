@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.card.MaterialCardView;
 import com.project.realhealthbuddy.Adapter.HealthSummaryAdapter;
+import com.project.realhealthbuddy.MainActivity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
 
@@ -72,8 +75,27 @@ public class HomeFragment extends Fragment {
         rv.setAdapter(new HealthSummaryAdapter(list));
 
 
+//==============================================================================================================
+
+        MaterialCardView mcvAddMed,mcvProgress,mcvMeditation;
+
+        mcvMeditation = view.findViewById(R.id.mcvhomemeditation);
+        mcvProgress = view.findViewById(R.id.mcvhomeprogress);
+        mcvAddMed = view.findViewById(R.id.mcvhomeaddmedicine);
+
+
+        mcvMeditation.setOnClickListener(v -> navigateToTab(R.id.homebottommenuMeditation));
+
+
 
 
         return view;
+    }
+    private void navigateToTab(int menuId) {
+        // Get BottomNavigationView from the parent activity
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.homeBottomNavigationView);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(menuId);
+        }
     }
 }

@@ -4,4 +4,6 @@
     <color name="purple">#7F19ED</color>
     <color name="blue">#174EDB</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="quick_actions_bg">#F5F7FA</color>
 </resources>

@@ -76,12 +76,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🩺 Health Summary Cards"
+            android:text="  1. 🩺 Health Summary Cards"
             android:layout_marginStart="2dp"
             android:layout_marginBottom="10dp"
             android:textStyle="bold"
+            android:fontFamily="@font/inter"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:letterSpacing="0.02"
+
 
             />
 
@@ -92,6 +95,222 @@
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never"
             />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  2. 💁 Quick Actions"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:letterSpacing="0.02"
+
+
+                />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:layout_marginTop="6dp"
+                android:padding="4dp">
+
+                <!-- Add Med -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvhomeaddmedicine"
+                    android:layout_width="0dp"
+                    android:layout_height="96dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#F0F6FA"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="16dp">
+
+                        <!-- Icon -->
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/add_ui"
+                             />
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add Medicine"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Today’s dose"
+                                android:textSize="12sp"
+                                android:textColor="#666666"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!-- Progress -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvhomeprogress"
+                    android:layout_width="0dp"
+                    android:layout_height="96dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#F9F5FA"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="16dp">
+
+                        <!-- Icon -->
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/progress_ui"
+                            />
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Progress"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="View your stats"
+                                android:textSize="12sp"
+                                android:textColor="#666666"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!-- Meditation -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvhomemeditation"
+                    android:layout_width="0dp"
+                    android:layout_height="96dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#F2F8F3"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="16dp">
+
+                        <!-- Icon -->
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/meditation_ui"
+                            />
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Meditation"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Relax for 5 minutes"
+                                android:textSize="12sp"
+                                android:textColor="#666666"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!-- My Profile (future)
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="96dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    android:text="🙎‍♂️ My Profile"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:icon="@drawable/ic_profile"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:cornerRadius="16dp"
+                    android:backgroundTint="#E9E8E8"
+                    android:elevation="2dp"/>
+                -->
+
+            </GridLayout>
+        </LinearLayout>
+
+
+
 
 
 
