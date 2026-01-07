@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -87,6 +89,67 @@ public class HomeFragment extends Fragment {
         mcvMeditation.setOnClickListener(v -> navigateToTab(R.id.homebottommenuMeditation));
 
 
+//================================================================================================================
+
+        View med1 = view.findViewById(R.id.medicineItem1);
+        View med2 = view.findViewById(R.id.medicineItem2);
+        TextView viewAll = view.findViewById(R.id.tvViewAllMedicines);
+
+        TextView name1 = med1.findViewById(R.id.tvMedicineName);
+        TextView time1 = med1.findViewById(R.id.tvMedicineTime);
+        TextView status1 = med1.findViewById(R.id.tvMedicineStatus);
+
+        TextView name2 = med2.findViewById(R.id.tvMedicineName);
+        TextView time2 = med2.findViewById(R.id.tvMedicineTime);
+        TextView status2 = med2.findViewById(R.id.tvMedicineStatus);
+
+        //  for hiding/showing medicine list
+        LinearLayout layoutNoMedicine = view.findViewById(R.id.layoutNoMedicine);
+        LinearLayout layoutMedicineList = view.findViewById(R.id.layoutMedicineList);
+
+       // TEMPORARY flag (later this comes from DB)
+        boolean hasMedicinesToday = false;
+
+        if (!hasMedicinesToday) {
+            layoutMedicineList.setVisibility(View.GONE);
+            layoutNoMedicine.setVisibility(View.VISIBLE);
+        }
+        else {
+            layoutMedicineList.setVisibility(View.VISIBLE);
+            layoutNoMedicine.setVisibility(View.GONE);
+        }
+
+
+
+        // Smaller text for Home
+        name1.setTextSize(14);
+        time1.setTextSize(12);
+        status1.setTextSize(11);
+
+        name2.setTextSize(14);
+        time2.setTextSize(12);
+        status2.setTextSize(11);
+
+        name1.setText("Paracetamol");
+        time1.setText("9:00 AM");
+        status1.setText("Upcoming");
+
+        name2.setText("Vitamin D");
+        time2.setText("2:00 PM");
+        status2.setText("Upcoming");
+
+        status1.setBackgroundResource(R.drawable.bg_status_upcoming);
+        status2.setBackgroundResource(R.drawable.bg_status_upcoming);
+
+
+        med1.setOnClickListener(v -> openMedicineFragment());
+        med2.setOnClickListener(v -> openMedicineFragment());
+
+        //mcvAddMed.setOnClickListener(v -> openMedicineFragment());
+
+        viewAll.setOnClickListener(v -> openMedicineFragment());
+
+
 
 
         return view;
@@ -98,4 +161,21 @@ public class HomeFragment extends Fragment {
             bottomNavigationView.setSelectedItemId(menuId);
         }
     }
+    private void openMedicineFragment() {
+        FragmentTransaction transaction =
+                requireActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction();
+
+        transaction.replace(R.id.homeframelayout, new MedicineFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+        // Update BottomNavigationView selection
+        BottomNavigationView bottomNav =
+                requireActivity().findViewById(R.id.homeBottomNavigationView);
+
+        bottomNav.setSelectedItemId(R.id.homebottommenuMedicine);
+    }
+
 }

@@ -6,4 +6,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="quick_actions_bg">#F5F7FA</color>
+
+
+    <color name="primaryColor">#4CAF50</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+
+
+    <color name="statusUpcoming">#2196F3</color>
+    <color name="statusTaken">#4CAF50</color>
+    <color name="statusMissed">#F44336</color>
 </resources>

@@ -310,6 +310,95 @@
         </LinearLayout>
 
 
+        <!-- Today's Medicines -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3. 💊 Today’s Medicines"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/textPrimary" />
+
+                <TextView
+                    android:id="@+id/tvViewAllMedicines"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View all"
+                    android:textSize="14sp"
+                    android:textColor="@color/primaryColor" />
+            </LinearLayout>
+
+            <!-- Empty state for Today's Medicines -->
+            <LinearLayout
+                android:id="@+id/layoutNoMedicine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/medicine_ui"
+                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="No medicines scheduled today"
+                    android:textSize="14sp"
+                    android:textColor="@color/textSecondary" />
+
+            </LinearLayout>
+
+
+
+            <!-- Medicine list container -->
+            <LinearLayout
+                android:id="@+id/layoutMedicineList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/medicineItem1"
+                    layout="@layout/item_medicine_reminder" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginVertical="4dp"
+                    android:background="#E0E0E0" />
+
+                <include
+                    android:id="@+id/medicineItem2"
+                    layout="@layout/item_medicine_reminder" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
 
 
 
