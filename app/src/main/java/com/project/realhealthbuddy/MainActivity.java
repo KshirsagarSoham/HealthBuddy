@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } else if (menuItem.getItemId() == R.id.homebottommenuMeditation) {
             getSupportFragmentManager().beginTransaction().replace(R.id.homeframelayout,meditationFragment).commit();
 
-        } else if (menuItem.getItemId() == R.id.homebottommenuHistory) {
+        } else if (menuItem.getItemId() == R.id.homebottommenuprogress) {
             getSupportFragmentManager().beginTransaction().replace(R.id.homeframelayout,historyFragment).commit();
 
         }

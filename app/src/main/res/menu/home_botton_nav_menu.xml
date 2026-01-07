@@ -15,7 +15,12 @@
         app:showAsAction="never"
         android:icon="@drawable/medicine"
     />
-
+    <item
+        android:id="@+id/homebottommenuprogress"
+        android:title="Progress"
+        app:showAsAction="never"
+        android:icon="@drawable/icon_history"
+        />
     <item
         android:id="@+id/homebottommenuMeditation"
         android:title="Meditation"
@@ -23,12 +28,7 @@
         android:icon="@drawable/meditation"
     />
 
-    <item
-        android:id="@+id/homebottommenuHistory"
-        android:title="History"
-        app:showAsAction="never"
-        android:icon="@drawable/icon_history"
-    />
+
 
 
 </menu>
