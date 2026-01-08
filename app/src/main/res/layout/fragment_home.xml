@@ -330,9 +330,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="3. 💊 Today’s Medicines"
-                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/textPrimary" />
+                    android:fontFamily="@font/inter"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:letterSpacing="0.02"
+                    />
 
                 <TextView
                     android:id="@+id/tvViewAllMedicines"
@@ -395,12 +398,54 @@
 
             </LinearLayout>
 
-
-
-
         </LinearLayout>
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4. 💁 Wellness Actions"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:letterSpacing="0.02"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginTop="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <include
+                    android:id="@+id/actionBreathing"
+                    layout="@layout/item_wellness_action_circle"/>
+
+                <include
+                    android:id="@+id/actionWalk"
+                    layout="@layout/item_wellness_action_circle"/>
+
+                <include
+                    android:id="@+id/actionSleep"
+                    layout="@layout/item_wellness_action_circle"/>
+
+                <include
+                    android:id="@+id/actionWater"
+                    layout="@layout/item_wellness_action_circle"/>
+
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
 
 

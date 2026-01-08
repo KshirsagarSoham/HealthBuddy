@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -148,6 +149,57 @@ public class HomeFragment extends Fragment {
         //mcvAddMed.setOnClickListener(v -> openMedicineFragment());
 
         viewAll.setOnClickListener(v -> openMedicineFragment());
+
+//============================================================================================================
+
+        View breathing = view.findViewById(R.id.actionBreathing);
+        View walk = view.findViewById(R.id.actionWalk);
+        View sleep = view.findViewById(R.id.actionSleep);
+        View water = view.findViewById(R.id.actionWater);
+
+        //Breathing
+        ImageView imgBreathing = breathing.findViewById(R.id.imgWellnessIcon);
+        imgBreathing.setImageResource(R.drawable.meditation_ui);
+
+        TextView tvBreathingTitle = breathing.findViewById(R.id.tvWellnessTitle);
+        tvBreathingTitle.setText("Breathing");
+
+        TextView tvBreathingSubtitle = breathing.findViewById(R.id.tvWellnessSubtitle);
+        tvBreathingSubtitle.setText("Relax");
+
+        //Walking
+        ImageView imgWalk = walk.findViewById(R.id.imgWellnessIcon);
+        imgWalk.setImageResource(R.drawable.steps);
+
+        TextView tvWalkTitle = walk.findViewById(R.id.tvWellnessTitle);
+        tvWalkTitle.setText("Walk");
+
+        TextView tvWalkSubtitle = walk.findViewById(R.id.tvWellnessSubtitle);
+        tvWalkSubtitle.setText("5 min");
+
+        // Sleep
+        ImageView imgSleep = sleep.findViewById(R.id.imgWellnessIcon);
+        imgSleep.setImageResource(R.drawable.sleep);
+
+        TextView tvSleepTitle = sleep.findViewById(R.id.tvWellnessTitle);
+        tvSleepTitle.setText("Sleep");
+
+        TextView tvSleepSubtitle = sleep.findViewById(R.id.tvWellnessSubtitle);
+        tvSleepSubtitle.setText("Better rest");
+
+        // Water
+        ImageView imgWater = water.findViewById(R.id.imgWellnessIcon);
+        imgWater.setImageResource(R.drawable.water);
+
+        TextView tvWaterTitle = water.findViewById(R.id.tvWellnessTitle);
+        tvWaterTitle.setText("Water");
+
+        TextView tvWaterSubtitle = water.findViewById(R.id.tvWellnessSubtitle);
+        tvWaterSubtitle.setText("Drink now");
+
+
+
+
 
 
 
