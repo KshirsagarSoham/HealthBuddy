@@ -15,13 +15,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.project.realhealthbuddy.Adapter.HealthSummaryAdapter;
+import com.project.realhealthbuddy.BreathingBottomSheet;
 import com.project.realhealthbuddy.MainActivity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
+import com.project.realhealthbuddy.SleepBottomSheet;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -159,7 +163,7 @@ public class HomeFragment extends Fragment {
 
         //Breathing
         ImageView imgBreathing = breathing.findViewById(R.id.imgWellnessIcon);
-        imgBreathing.setImageResource(R.drawable.meditation_ui);
+        imgBreathing.setImageResource(R.drawable.breathing);
 
         TextView tvBreathingTitle = breathing.findViewById(R.id.tvWellnessTitle);
         tvBreathingTitle.setText("Breathing");
@@ -169,7 +173,7 @@ public class HomeFragment extends Fragment {
 
         //Walking
         ImageView imgWalk = walk.findViewById(R.id.imgWellnessIcon);
-        imgWalk.setImageResource(R.drawable.steps);
+        imgWalk.setImageResource(R.drawable.steps_wellness);
 
         TextView tvWalkTitle = walk.findViewById(R.id.tvWellnessTitle);
         tvWalkTitle.setText("Walk");
@@ -179,23 +183,55 @@ public class HomeFragment extends Fragment {
 
         // Sleep
         ImageView imgSleep = sleep.findViewById(R.id.imgWellnessIcon);
-        imgSleep.setImageResource(R.drawable.sleep);
+        imgSleep.setImageResource(R.drawable.sleep_wellness);
 
         TextView tvSleepTitle = sleep.findViewById(R.id.tvWellnessTitle);
-        tvSleepTitle.setText("Sleep");
+        tvSleepTitle.setText("Sleep Tips");
 
         TextView tvSleepSubtitle = sleep.findViewById(R.id.tvWellnessSubtitle);
         tvSleepSubtitle.setText("Better rest");
 
         // Water
         ImageView imgWater = water.findViewById(R.id.imgWellnessIcon);
-        imgWater.setImageResource(R.drawable.water);
+        imgWater.setImageResource(R.drawable.hydration_wellness);
 
         TextView tvWaterTitle = water.findViewById(R.id.tvWellnessTitle);
         tvWaterTitle.setText("Water");
 
         TextView tvWaterSubtitle = water.findViewById(R.id.tvWellnessSubtitle);
         tvWaterSubtitle.setText("Drink now");
+
+
+        breathing.setOnClickListener(v -> {
+            BreathingBottomSheet sheet = new BreathingBottomSheet();
+            sheet.show(getParentFragmentManager(), "BreathingSheet");
+        });
+
+        sleep.setOnClickListener(v -> {
+            SleepBottomSheet sheet = new SleepBottomSheet();
+            sheet.show(getParentFragmentManager(), "SleepSheet");
+        });
+
+        walk.setOnClickListener(v -> {
+            Snackbar.make(v,
+                            "🚶 Take a 5–10 minute walk today",
+                            Snackbar.LENGTH_LONG)
+                    .setAction("Done", snack -> {
+                        // Optional future logic
+                    })
+                    .show();
+        });
+
+        water.setOnClickListener(v -> {
+            Toast.makeText(requireContext(),
+                    "💧 Drink a glass of water now",
+                    Toast.LENGTH_SHORT).show();
+        });
+
+
+
+
+
 
 
 
