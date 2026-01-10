@@ -310,9 +310,222 @@
         </LinearLayout>
 
 
+        <!-- Today's Medicines -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3. 💊 Today’s Medicines"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:letterSpacing="0.02"
+                    />
+
+                <TextView
+                    android:id="@+id/tvViewAllMedicines"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View all"
+                    android:textSize="14sp"
+                    android:textColor="@color/primaryColor" />
+            </LinearLayout>
+
+            <!-- Empty state for Today's Medicines -->
+            <LinearLayout
+                android:id="@+id/layoutNoMedicine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/medicine_ui"
+                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="No medicines scheduled today"
+                    android:textSize="14sp"
+                    android:textColor="@color/textSecondary" />
+
+            </LinearLayout>
 
 
 
+            <!-- Medicine list container -->
+            <LinearLayout
+                android:id="@+id/layoutMedicineList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/medicineItem1"
+                    layout="@layout/item_medicine_reminder" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginVertical="4dp"
+                    android:background="#E0E0E0" />
+
+                <include
+                    android:id="@+id/medicineItem2"
+                    layout="@layout/item_medicine_reminder" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4. 💁 Wellness Actions"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:letterSpacing="0.02"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginTop="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <include
+                    android:id="@+id/actionBreathing"
+                    layout="@layout/item_wellness_action_circle"/>
+
+                <include
+                    android:id="@+id/actionWalk"
+                    layout="@layout/item_wellness_action_circle"/>
+
+                <include
+                    android:id="@+id/actionSleep"
+                    layout="@layout/item_wellness_action_circle"/>
+
+                <include
+                    android:id="@+id/actionWater"
+                    layout="@layout/item_wellness_action_circle"/>
+
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   5. 💡 Daily Wellness Tip"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:letterSpacing="0.02"
+            android:layout_marginTop="15dp"
+            />
+        <!-- Health Tip of the Day -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardHealthTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#ffffff"
+            app:strokeWidth="1dp"
+            app:strokeColor="#E0E0E0"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Header -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/tips"
+                       />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tip of the Day"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:textColor="@color/tipTitle"
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
+
+                <!-- Tip text -->
+                <TextView
+                    android:id="@+id/tvHealthTip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Health tip goes here"
+                    android:textSize="16sp"
+                    android:textColor="@color/tipText"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="5dp"/>
+
+                <!-- Footer -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌿 Stay Healthy"
+                    android:textSize="12sp"
+                    android:textColor="@color/tipFooter"
+                    android:layout_marginTop="12dp"
+                    android:layout_gravity="end"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 
 
