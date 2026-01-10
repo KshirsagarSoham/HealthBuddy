@@ -21,6 +21,9 @@ import com.project.realhealthbuddy.Fragments.HistoryFragment;
 import com.project.realhealthbuddy.Fragments.HomeFragment;
 import com.project.realhealthbuddy.Fragments.MedicineFragment;
 import com.project.realhealthbuddy.Fragments.MeditationFragment;
+import com.project.realhealthbuddy.comman.User;
+import com.project.realhealthbuddy.comman.UserDao;
+
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.

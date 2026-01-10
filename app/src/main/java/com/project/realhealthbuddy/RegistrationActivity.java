@@ -12,6 +12,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.room.Room;
+import android.content.Context;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +23,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.project.realhealthbuddy.comman.AppDatabase;
 import com.project.realhealthbuddy.comman.DBhelper;
+import com.project.realhealthbuddy.comman.User;
+import com.project.realhealthbuddy.comman.UserDao;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -96,13 +102,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 } else {
                     String name= etName.getText().toString();
-                    String mobile= etName.getText().toString();
-                    String email= etName.getText().toString();
-                    String username= etName.getText().toString();
-                    String password = etName.getText().toString();
+                    String mobile= etMobileNo.getText().toString();
+                    String email= etEmailID.getText().toString();
+                    String username= etUsername.getText().toString();
+                    String password = etPassword.getText().toString();
 
 
-                    boolean inserted = dBhelper.registeruser(name, mobile, email, username, password);
+                   /* boolean inserted = dBhelper.registeruser(name, mobile, email, username, password);
                     if (inserted) {
                         editor.putString("name", name);
                         editor.putString("mobileno",  mobile);
@@ -112,7 +118,31 @@ public class RegistrationActivity extends AppCompatActivity {
                         editor.putBoolean("islogin", true);
                         editor.apply();
 
-                        Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+
+
+*/
+
+// In onCreate or method
+                    // Get Room database and DAO (add as class members or singleton)
+                    AppDatabase db = AppDatabase.getDatabase(RegistrationActivity.this);
+                    UserDao userDao = db.userDao();
+
+// Insert user
+                    User newUser = new User(name, mobile, email, username, password);  // Hash password first in production
+                    long result = userDao.insertUser(newUser);
+                    boolean inserted = result != -1;
+
+                    if (inserted) {
+                        editor.putString("name", name);
+                        editor.putString("mobileno", mobile);
+                        editor.putString("email", email);
+                        editor.putString("username", username);
+                        // Remove or hash password storage: editor.remove("password");
+                        editor.putBoolean("islogin", true);
+                        editor.apply();
+
+                        // Optional: Show success and navigate
+                        Toast.makeText(RegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                         finish();
                     } else {
