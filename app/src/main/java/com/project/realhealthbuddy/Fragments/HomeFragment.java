@@ -22,12 +22,14 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.project.realhealthbuddy.Adapter.HealthSummaryAdapter;
 import com.project.realhealthbuddy.BreathingBottomSheet;
+import com.project.realhealthbuddy.HealthTipsProvider;
 import com.project.realhealthbuddy.MainActivity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
 import com.project.realhealthbuddy.SleepBottomSheet;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -62,9 +64,10 @@ public class HomeFragment extends Fragment {
         tvUsername.setText("Hello, " + firstName + " ! 👋");
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-        String today = "Today is " + sdf.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault());
+        String today = "Today is "+ sdf.format(new Date());
         tvDateandTime.setText(today);
+
 
 //==========================================================================================================
 
@@ -224,10 +227,15 @@ public class HomeFragment extends Fragment {
 
         water.setOnClickListener(v -> {
             Toast.makeText(requireContext(),
-                    "💧 Drink a glass of water now",
+                    "💧 Drink a glass of water",
                     Toast.LENGTH_SHORT).show();
         });
 
+//=====================================================================================================================
+
+
+        TextView tvHealthTip = view.findViewById(R.id.tvHealthTip);
+        tvHealthTip.setText(HealthTipsProvider.getRandomTip());
 
 
 

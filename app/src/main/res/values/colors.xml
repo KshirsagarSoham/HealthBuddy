@@ -16,4 +16,11 @@
     <color name="statusUpcoming">#2196F3</color>
     <color name="statusTaken">#4CAF50</color>
     <color name="statusMissed">#F44336</color>
+
+    <color name="tipCardBg">#EAF7F0</color>
+    <color name="tipTitle">#2E7D32</color>
+    <color name="tipText">#2F2F2F</color>
+    <color name="tipFooter">#6F8F7A</color>
+    <color name="tipIcon">#2E7D32</color>
+
 </resources>
