@@ -56,7 +56,8 @@ public class HomeFragment extends Fragment {
 
         String fullName = preferences.getString("username","User");
 
-        String firstName = fullName;
+
+        String firstName = preferences.getString("username","Guest");
         if (fullName.contains(" ")) {
             firstName = fullName.substring(0, fullName.indexOf(" "));
         }
