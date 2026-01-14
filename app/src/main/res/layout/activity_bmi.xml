@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/ivback"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:src="@drawable/back"
+                />
+
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BMI Calculator"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#2F9BFF"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"/>
+
+        </LinearLayout>
+
+
+
+
+        <!-- Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_bmi_card"
+            android:padding="20dp"
+            android:elevation="6dp"
+            android:layout_marginTop="50dp"
+            >
+
+            <!-- Age -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Age"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:layout_width="180dp"
+                    android:layout_height="48dp"
+                    android:hint="Enter your age"
+                    android:inputType="number"
+                    android:background="@drawable/bg_edittext"
+                    android:padding="10dp"
+                    android:layout_marginStart="75dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <!-- Height -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Height\n(cm)"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:layout_width="180dp"
+                    android:layout_height="48dp"
+                    android:hint="Enter your height"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/bg_edittext"
+                    android:padding="10dp"
+                    android:layout_marginStart="52dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <!-- Weight -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight\n(kg)"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    />
+
+                <EditText
+                    android:layout_width="180dp"
+                    android:layout_height="48dp"
+                    android:hint="Enter your weight"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/bg_edittext"
+                    android:padding="10dp"
+                    android:layout_marginStart="50dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <!-- Gender Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Male"
+                    android:background="@drawable/bg_gender_button"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/black"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Female"
+                    android:background="@drawable/bg_gender_button"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <!-- Calculate Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Calculate BMI"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:background="@drawable/bg_calculate_button"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <!-- Result -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BMI:"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00.00"
+                android:textSize="20dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Result:"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Result"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

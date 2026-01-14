@@ -1,5 +1,6 @@
 package com.project.realhealthbuddy.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.project.realhealthbuddy.BMI_Activity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
 
@@ -37,6 +39,16 @@ public class HealthSummaryAdapter
         holder.icon.setImageResource(item.icon);
         holder.title.setText(item.title);
         holder.value.setText(item.value);
+
+        holder.itemView.setOnClickListener(v -> {
+
+            if (item.type.equals(HealthSummaryItem.TYPE_BMI)) {
+                Intent intent = new Intent(v.getContext(), BMI_Activity.class);
+                v.getContext().startActivity(intent);
+            }
+
+        });
+
     }
 
     @Override

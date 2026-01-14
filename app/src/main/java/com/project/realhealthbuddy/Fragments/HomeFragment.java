@@ -74,16 +74,21 @@ public class HomeFragment extends Fragment {
 
         ArrayList<HealthSummaryItem> list = new ArrayList<>();
 
-        list.add(new HealthSummaryItem(R.drawable.bmi, "BMI Calculator", "22.4"));
-        list.add(new HealthSummaryItem(R.drawable.steps, "Steps", "4523"));
-        list.add(new HealthSummaryItem(R.drawable.sleep, "Sleep", "7h 10m"));
-        list.add(new HealthSummaryItem(R.drawable.water, "Water", "2.1 L"));
-        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh", "85%"));
+        list.add(new HealthSummaryItem(R.drawable.bmi, "BMI Calculator", "22.4",HealthSummaryItem.TYPE_BMI));
+        list.add(new HealthSummaryItem(R.drawable.steps, "Steps", "4523",HealthSummaryItem.TYPE_STEPS));
+        list.add(new HealthSummaryItem(R.drawable.sleep, "Sleep", "7h 10m",HealthSummaryItem.TYPE_SLEEP));
+        list.add(new HealthSummaryItem(R.drawable.water, "Water", "2.1 L",HealthSummaryItem.TYPE_WATER));
+        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh", "85%",HealthSummaryItem.TYPE_MED));
+
+
+
 
         RecyclerView rv = view.findViewById(R.id.rvhomehealthsummary);
         rv.setLayoutManager(new GridLayoutManager(requireContext(), 3));
         rv.setHasFixedSize(false);
         rv.setAdapter(new HealthSummaryAdapter(list));
+
+
 
 
 //==============================================================================================================
