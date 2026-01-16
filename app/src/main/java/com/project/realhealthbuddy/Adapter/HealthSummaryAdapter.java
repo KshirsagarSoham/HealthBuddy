@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.project.realhealthbuddy.BMI_Activity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
+import com.project.realhealthbuddy.SleepActivity;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,10 @@ public class HealthSummaryAdapter
 
             if (item.type.equals(HealthSummaryItem.TYPE_BMI)) {
                 Intent intent = new Intent(v.getContext(), BMI_Activity.class);
+                v.getContext().startActivity(intent);
+            }
+            else if (item.type.equals(HealthSummaryItem.TYPE_SLEEP)) {
+                Intent intent = new Intent(v.getContext(), SleepActivity.class);
                 v.getContext().startActivity(intent);
             }
 
