@@ -1,5 +1,6 @@
 package com.project.realhealthbuddy.Fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -42,6 +43,10 @@ public class HomeFragment extends Fragment {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
+    private ArrayList<HealthSummaryItem> list;
+    private HealthSummaryAdapter adapter;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,13 +77,14 @@ public class HomeFragment extends Fragment {
 
 //==========================================================================================================
 
-        ArrayList<HealthSummaryItem> list = new ArrayList<>();
+        list = new ArrayList<>();
 
-        list.add(new HealthSummaryItem(R.drawable.bmi, "BMI Calculator", "22.4",HealthSummaryItem.TYPE_BMI));
-        list.add(new HealthSummaryItem(R.drawable.steps, "Steps", "4523",HealthSummaryItem.TYPE_STEPS));
-        list.add(new HealthSummaryItem(R.drawable.sleep, "Sleep", "7h 10m",HealthSummaryItem.TYPE_SLEEP));
-        list.add(new HealthSummaryItem(R.drawable.water, "Water", "2.1 L",HealthSummaryItem.TYPE_WATER));
-        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh", "85%",HealthSummaryItem.TYPE_MED));
+
+        list.add(new HealthSummaryItem(R.drawable.bmi, "BMI Calculator", "0.00",HealthSummaryItem.TYPE_BMI));
+        list.add(new HealthSummaryItem(R.drawable.steps, "Steps", "0000",HealthSummaryItem.TYPE_STEPS));
+        list.add(new HealthSummaryItem(R.drawable.sleep, "Sleep", "0h 0m",HealthSummaryItem.TYPE_SLEEP));
+        list.add(new HealthSummaryItem(R.drawable.water, "Water", "0.0",HealthSummaryItem.TYPE_WATER));
+        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh", "0",HealthSummaryItem.TYPE_MED));
 
 
 
@@ -86,7 +92,10 @@ public class HomeFragment extends Fragment {
         RecyclerView rv = view.findViewById(R.id.rvhomehealthsummary);
         rv.setLayoutManager(new GridLayoutManager(requireContext(), 3));
         rv.setHasFixedSize(false);
-        rv.setAdapter(new HealthSummaryAdapter(list));
+
+        adapter = new HealthSummaryAdapter(list);
+        rv.setAdapter(adapter);
+
 
 
 
@@ -279,5 +288,40 @@ public class HomeFragment extends Fragment {
 
         bottomNav.setSelectedItemId(R.id.homebottommenuMedicine);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateWaterCard();
+    }
+
+
+    public void updateWaterCard() {
+
+        SharedPreferences prefs = requireContext()
+                .getSharedPreferences("health_data", Context.MODE_PRIVATE);
+
+        int waterMl = prefs.getInt("water_ml", 0);
+
+        String displayValue;
+        if (waterMl == 0) {
+            displayValue = "0.0 L";
+        } else {
+            displayValue = String.format("%.1f L", waterMl / 1000f);
+        }
+
+        // Find WATER item and update it
+        for (int i = 0; i < list.size(); i++) {
+            HealthSummaryItem item = list.get(i);
+
+            if (HealthSummaryItem.TYPE_WATER.equals(item.getType())) {
+                item.setValue(displayValue);
+                adapter.notifyItemChanged(i);
+                break;
+            }
+
+        }
+    }
+
 
 }

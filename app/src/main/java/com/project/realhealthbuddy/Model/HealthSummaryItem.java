@@ -19,4 +19,12 @@ public class HealthSummaryItem {
         this.value = value;
         this.type = type;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
