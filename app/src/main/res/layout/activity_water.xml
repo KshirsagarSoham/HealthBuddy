@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Top Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Back Arrow (LEFT) -->
+                <ImageView
+                    android:id="@+id/backbutton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/back_button" />
+
+                <!-- Water Icon (CENTER) -->
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/water"
+                    android:layout_marginStart="100dp"/>
+
+
+            </LinearLayout>
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Water Intake"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stay hydrated throughout the day"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+
+        <!-- CIRCULAR PROGRESS CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="20dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="24dp"
+                android:background="#ECF5FB">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/waterProgress"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    app:indicatorSize="220dp"
+                    app:trackThickness="12dp"
+                    app:trackColor="#A1D5FB"
+                    app:indicatorColor="#0465B8"
+                    android:progress="60"
+                    />
+
+                <TextView
+                    android:id="@+id/tvWaterAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1500 ml"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="#263238"
+                    android:layout_marginTop="-150dp" />
+
+                <TextView
+                    android:id="@+id/tvWaterGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="of 2500 ml"
+                    android:textSize="14sp"
+                    android:textColor="#607D8B"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/tvHydrationPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60% Hydrated 💧"
+                    android:textSize="14sp"
+                    android:textColor="#1E88E5"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- QUICK ADD CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#ECF5FB">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quick Add"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#263238"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="3">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn250"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="+ 250 ml"
+                        app:cornerRadius="24dp"
+                        app:backgroundTint="#90CAF9"
+                        android:textColor="@android:color/white"
+                        android:padding="2dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn500"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="+ 500 ml"
+                        app:cornerRadius="24dp"
+                        app:backgroundTint="#64B5F6"
+                        android:textColor="@android:color/white"
+                        android:layout_marginHorizontal="8dp"
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn750"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="+ 750 ml"
+                        app:cornerRadius="24dp"
+                        app:backgroundTint="#1E88E5"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- HYDRATION TIP -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#ECF5FB">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡 Hydration Tip"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="#263238"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Drink water before you feel thirsty."
+                    android:textSize="14sp"
+                    android:textColor="#455A64" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>
