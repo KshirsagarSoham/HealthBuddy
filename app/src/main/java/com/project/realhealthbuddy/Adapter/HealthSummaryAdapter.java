@@ -14,6 +14,7 @@ import com.project.realhealthbuddy.BMI_Activity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
 import com.project.realhealthbuddy.SleepActivity;
+import com.project.realhealthbuddy.Steps.StepsActivity;
 import com.project.realhealthbuddy.WaterActivity;
 
 import java.util.ArrayList;
@@ -54,6 +55,10 @@ public class HealthSummaryAdapter
             }
             else if (item.type.equals(HealthSummaryItem.TYPE_WATER)) {
                 Intent intent = new Intent(v.getContext(), WaterActivity.class);
+                v.getContext().startActivity(intent);
+
+            } else if (item.type.equals(HealthSummaryItem.TYPE_STEPS)) {
+                Intent intent = new Intent(v.getContext(), StepsActivity.class);
                 v.getContext().startActivity(intent);
 
             }
