@@ -28,6 +28,8 @@ import com.project.realhealthbuddy.MainActivity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
 import com.project.realhealthbuddy.SleepBottomSheet;
+import com.project.realhealthbuddy.Steps.Data.StepsEntity;
+import com.project.realhealthbuddy.Steps.Repository.StepsRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -75,13 +77,28 @@ public class HomeFragment extends Fragment {
         tvDateandTime.setText(today);
 
 
+        StepsRepository repository = new StepsRepository(requireActivity().getApplication());
+
+        String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                .format(new Date());
+
+        StepsEntity todayEntity = repository.getStepsByDate(todayDate);
+
+        int todaySteps = 0;
+
+        if (todayEntity != null) {
+            todaySteps = todayEntity.steps;
+        }
+
+
+
 //==========================================================================================================
 
         list = new ArrayList<>();
 
 
         list.add(new HealthSummaryItem(R.drawable.bmi, "BMI Calculator", "0.00",HealthSummaryItem.TYPE_BMI));
-        list.add(new HealthSummaryItem(R.drawable.steps, "Steps", "0000",HealthSummaryItem.TYPE_STEPS));
+        list.add(new HealthSummaryItem(R.drawable.steps, "Steps", String.valueOf(todaySteps), HealthSummaryItem.TYPE_STEPS));
         list.add(new HealthSummaryItem(R.drawable.sleep, "Sleep", "0h 0m",HealthSummaryItem.TYPE_SLEEP));
         list.add(new HealthSummaryItem(R.drawable.water, "Water", "0.0",HealthSummaryItem.TYPE_WATER));
         list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh", "0",HealthSummaryItem.TYPE_MED));

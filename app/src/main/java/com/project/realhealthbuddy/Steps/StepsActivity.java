@@ -7,6 +7,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +34,15 @@ import android.content.SharedPreferences;
 import android.widget.ProgressBar;
 
 import android.animation.ObjectAnimator;
+
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.text.InputType;
+import android.widget.Button;
+import android.widget.EditText;
+
+import android.os.Handler;
+
 
 
 
@@ -57,6 +69,11 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
     private ProgressBar progressBar;
     private TextView goalText;
     private TextView percentageText;
+
+    private TextView tvDistance, tvCalories;
+
+
+
 
 
     @Override
@@ -110,6 +127,46 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
         goalText.setText("Goal: " + stepGoal + " steps");
 
 
+        Button btnSetGoal = findViewById(R.id.btnSetGoal);
+
+        btnSetGoal.setOnClickListener(v -> showGoalDialog());
+
+    // Refresh
+
+        ProgressBar progressRefresh = findViewById(R.id.progressRefresh);
+        Button btnRefresh = findViewById(R.id.btnRefresh);
+
+        btnRefresh.setOnClickListener(v -> {
+
+            btnRefresh.setVisibility(View.INVISIBLE);
+            progressRefresh.setVisibility(View.VISIBLE);
+
+            new Handler().postDelayed(() -> {
+
+                // Get current percentage
+                int currentSteps = Integer.parseInt(stepsText.getText().toString());
+                int percentage = (int) ((currentSteps * 100.0f) / stepGoal);
+                if (percentage > 100) percentage = 100;
+
+                // Reset and re-animate
+                progressBar.setProgress(0);
+                animateProgress(percentage);
+
+                percentageText.setText(percentage + "%");
+
+                progressRefresh.setVisibility(View.GONE);
+                btnRefresh.setVisibility(View.VISIBLE);
+
+            }, 800);
+        });
+
+    // Extra metrics distance and calories
+
+        tvDistance = findViewById(R.id.tvDistance);
+        tvCalories = findViewById(R.id.tvCalories);
+
+
+
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
@@ -123,6 +180,16 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
             isSensorPresent = false;
             Toast.makeText(this, "Step Sensor Not Available", Toast.LENGTH_LONG).show();
         }
+
+
+        ImageView back = findViewById(R.id.backbutton3);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -188,6 +255,9 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
 
             percentageText.setText(percentage + "%");
 
+            updateExtraMetrics(todaySteps);
+
+
             // Refresh 7-day history list
             if (historyAdapter != null) {
                 historyAdapter.notifyDataSetChanged();
@@ -209,5 +279,69 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
         animation.setDuration(800); // 0.8 seconds
         animation.start();
     }
+
+    private void showGoalDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Set Step Goal");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setHint("Enter goal (e.g. 8000)");
+        input.setText(String.valueOf(stepGoal)); // show current goal
+
+        builder.setView(input);
+
+        builder.setPositiveButton("Save", (dialog, which) -> {
+
+            String value = input.getText().toString().trim();
+
+            if (!value.isEmpty()) {
+
+                stepGoal = Integer.parseInt(value);
+
+                if (stepGoal <= 0) stepGoal = 8000; // safety fallback
+
+                // Save goal
+                SharedPreferences prefs =
+                        getSharedPreferences("steps_prefs", MODE_PRIVATE);
+
+                prefs.edit().putInt("step_goal", stepGoal).apply();
+
+                goalText.setText("Goal: " + stepGoal + " steps");
+
+                updateProgressUI(); // recalculate immediately
+            }
+        });
+
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
+
+    private void updateProgressUI() {
+
+        int currentSteps = Integer.parseInt(stepsText.getText().toString());
+
+        int percentage = (int) ((currentSteps * 100.0f) / stepGoal);
+
+        if (percentage > 100) percentage = 100;
+
+        animateProgress(percentage);
+        percentageText.setText(percentage + "%");
+    }
+
+    private void updateExtraMetrics(int steps) {
+
+        // Distance calculation
+        float stepLength = 0.75f; // meters
+        float distanceKm = (steps * stepLength) / 1000f;
+
+        // Calories calculation
+        float calories = steps * 0.04f;
+
+        tvDistance.setText(String.format("Distance: %.2f km", distanceKm));
+        tvCalories.setText(String.format("Calories: %.0f kcal", calories));
+    }
+
 
 }
