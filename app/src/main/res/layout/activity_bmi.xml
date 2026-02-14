@@ -13,31 +13,55 @@
         android:padding="20dp"
         android:background="#ffffff">
 
+        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <ImageView
-                android:id="@+id/ivback"
-                android:layout_width="45dp"
-                android:layout_height="40dp"
-                android:src="@drawable/back"
-                />
+            <!-- Top Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <!-- Back Arrow -->
+                <ImageView
+                    android:id="@+id/backbutton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/back_button" />
+
+                <!-- BMI Icon -->
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/bmi"
+                    android:layout_marginStart="100dp"/>
+            </LinearLayout>
 
             <!-- Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BMI Calculator"
-                android:textSize="28sp"
+                android:textColor="@color/black"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="#2F9BFF"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check your Body Mass Index"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center" />
 
         </LinearLayout>
 
@@ -102,6 +126,7 @@
                 <EditText
                     android:layout_width="180dp"
                     android:layout_height="48dp"
+                    android:id="@+id/etHeight"
                     android:hint="Enter your height"
                     android:inputType="numberDecimal"
                     android:background="@drawable/bg_edittext"
@@ -131,6 +156,7 @@
                 <EditText
                     android:layout_width="180dp"
                     android:layout_height="48dp"
+                    android:id="@+id/etWeight"
                     android:hint="Enter your weight"
                     android:inputType="numberDecimal"
                     android:background="@drawable/bg_edittext"
@@ -174,6 +200,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:id="@+id/btnCalculate"
                 android:text="Calculate BMI"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
@@ -181,30 +208,57 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"/>
 
+            <!-- for logic combine value and result -->
+            <LinearLayout
+                android:id="@+id/resultLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:alpha="0">
+
+            <!--just for bmi value-->
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               >
+
             <!-- Result -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BMI:"
-                android:textStyle="bold"
                 android:textSize="25dp"
+                android:layout_marginStart="12dp"
                 android:textColor="@color/black"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tvBmiValue"
                 android:text="00.00"
-                android:textSize="20dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="25dp"
                 android:textColor="@color/black"
                 />
+
+           </LinearLayout>
+
+            <!--for result-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Result:"
-                android:textStyle="bold"
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 />
@@ -212,10 +266,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tvResult"
                 android:text="Result"
-                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:layout_marginStart="12dp"
                 android:textColor="@color/black"
                 />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

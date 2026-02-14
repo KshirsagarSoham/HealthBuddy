@@ -269,17 +269,6 @@ public class HomeFragment extends Fragment {
         TextView tvHealthTip = view.findViewById(R.id.tvHealthTip);
         tvHealthTip.setText(HealthTipsProvider.getRandomTip());
 
-
-
-
-
-
-
-
-
-
-
-
         return view;
     }
     private void navigateToTab(int menuId) {
@@ -310,6 +299,21 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateWaterCard();
+
+        SharedPreferences prefs = requireContext()
+                .getSharedPreferences("health_data", Context.MODE_PRIVATE);
+
+        String savedBmi = prefs.getString("bmi_value", "0.0");
+
+        for (HealthSummaryItem item : list) {
+            if (item.type.equals(HealthSummaryItem.TYPE_BMI)) {
+                item.value = savedBmi;
+                break;
+            }
+        }
+
+        adapter.notifyDataSetChanged();
+
     }
 
 
