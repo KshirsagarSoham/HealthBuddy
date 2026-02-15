@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
         list.add(new HealthSummaryItem(R.drawable.steps, "Steps", String.valueOf(todaySteps), HealthSummaryItem.TYPE_STEPS));
         list.add(new HealthSummaryItem(R.drawable.sleep, "Sleep", "0h 0m",HealthSummaryItem.TYPE_SLEEP));
         list.add(new HealthSummaryItem(R.drawable.water, "Water", "0.0",HealthSummaryItem.TYPE_WATER));
-        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh", "0",HealthSummaryItem.TYPE_MED));
+        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh.", "0",HealthSummaryItem.TYPE_MED));
 
 
 
@@ -299,6 +299,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateWaterCard();
+        updateSleepCard();
 
         SharedPreferences prefs = requireContext()
                 .getSharedPreferences("health_data", Context.MODE_PRIVATE);
@@ -341,6 +342,32 @@ public class HomeFragment extends Fragment {
                 break;
             }
 
+        }
+    }
+
+    private void updateSleepCard() {
+
+        SharedPreferences prefs =
+                requireContext().getSharedPreferences("health_data", Context.MODE_PRIVATE);
+
+        int totalMinutes = prefs.getInt("sleep_minutes", -1);
+
+        if (totalMinutes != -1) {
+
+            int hours = totalMinutes / 60;
+            int minutes = totalMinutes % 60;
+
+            String duration = hours + "h " + minutes + "m";
+
+            for (int i = 0; i < list.size(); i++) {
+
+                if (list.get(i).getType() == HealthSummaryItem.TYPE_SLEEP) {
+
+                    list.get(i).setValue(duration);
+                    adapter.notifyItemChanged(i);
+                    break;
+                }
+            }
         }
     }
 

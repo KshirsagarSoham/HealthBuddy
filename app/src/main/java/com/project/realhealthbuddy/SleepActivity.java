@@ -2,6 +2,7 @@ package com.project.realhealthbuddy;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +56,9 @@ public class SleepActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
     }
 
     // ------------------ TIME PICKERS ------------------
@@ -129,6 +133,12 @@ public class SleepActivity extends AppCompatActivity {
         tvSleepAdvice.setText(advice);
 
         cardResult.setVisibility(View.VISIBLE);
+
+        SharedPreferences prefs = getSharedPreferences("health_data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putInt("sleep_minutes", totalMinutes);
+        editor.apply();
 
     }
 
