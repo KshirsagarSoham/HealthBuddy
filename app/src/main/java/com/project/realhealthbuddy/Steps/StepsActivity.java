@@ -196,19 +196,19 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
     protected void onResume() {
         super.onResume();
 
-        if (isSensorPresent) {
-            sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI);
+        if (stepSensor != null) {
+            sensorManager.registerListener(this,
+                    stepSensor,
+                    SensorManager.SENSOR_DELAY_UI);
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        if (isSensorPresent) {
-            sensorManager.unregisterListener(this);
-        }
+        sensorManager.unregisterListener(this);
     }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -229,15 +229,18 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
 
             } else {
 
-                todaySteps = (int) (totalSteps - todayEntity.baseValue);
-
-                // Safety check if phone rebooted
-                if (todaySteps < 0) {
+                if (totalSteps < todayEntity.baseValue) {
+                    // Phone reboot detected
+                    todayEntity.baseValue = totalSteps;
                     todaySteps = 0;
+                } else {
+                    todaySteps = (int) (totalSteps - todayEntity.baseValue);
                 }
+
 
                 todayEntity.steps = todaySteps;
                 repository.update(todayEntity);
+
             }
 
             // -------- UI UPDATE (common section) --------
@@ -258,10 +261,12 @@ public class StepsActivity extends AppCompatActivity implements SensorEventListe
             updateExtraMetrics(todaySteps);
 
 
-            // Refresh 7-day history list
+            // Refresh 7-day history list properly
             if (historyAdapter != null) {
-                historyAdapter.notifyDataSetChanged();
+                List<StepsEntity> updatedList = repository.getLast7Days();
+                historyAdapter.updateList(updatedList);
             }
+
         }
     }
 

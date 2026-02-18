@@ -108,4 +108,9 @@ public class StepsHistoryAdapter extends RecyclerView.Adapter<StepsHistoryAdapte
             stepsText = itemView.findViewById(R.id.stepsHistoryText);
         }
     }
+    public void updateList(List<StepsEntity> newList) {
+        this.list = newList;
+        notifyDataSetChanged();
+    }
+
 }

@@ -300,6 +300,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         updateWaterCard();
         updateSleepCard();
+        loadTodaySteps();
 
         SharedPreferences prefs = requireContext()
                 .getSharedPreferences("health_data", Context.MODE_PRIVATE);
@@ -370,6 +371,35 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+
+    private void loadTodaySteps() {
+
+        StepsRepository repository =
+                new StepsRepository(requireActivity().getApplication());
+
+        String todayDate = new SimpleDateFormat("yyyy-MM-dd",
+                Locale.getDefault()).format(new Date());
+
+        StepsEntity entity = repository.getStepsByDate(todayDate);
+
+        int steps = 0;
+
+        if (entity != null) {
+            steps = entity.steps;
+        }
+
+        // Update steps item inside summary list
+        for (HealthSummaryItem item : list) {
+            if (item.getType() == HealthSummaryItem.TYPE_STEPS) {
+                item.setValue(String.valueOf(steps));
+                break;
+            }
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+
 
 
 }
