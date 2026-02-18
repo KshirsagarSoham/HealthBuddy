@@ -11,7 +11,7 @@
         android:color="#BDBDBD"/> <!-- light gray border -->
 
     <!-- Rounded corners -->
-    <corners android:radius="8dp"/>
+    <corners android:radius="20dp"/>
 
     <!-- Inner padding -->
     <padding

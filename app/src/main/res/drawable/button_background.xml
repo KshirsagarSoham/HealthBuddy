@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Pressed State -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#1976D2"/> <!-- Darker Blue when pressed -->
-            <corners android:radius="12dp"/>
+            <solid android:color="#1B5E20"/> <!-- Darker Green -->
+            <corners android:radius="20dp"/>
         </shape>
     </item>
 
@@ -13,10 +14,11 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#2196F3"
-                android:endColor="#64B5F6"
+                android:startColor="#2E7D32"
+                android:endColor="#43A047"
                 android:angle="90"/>
-            <corners android:radius="12dp"/>
+            <corners android:radius="20dp"/>
         </shape>
     </item>
+
 </selector>
