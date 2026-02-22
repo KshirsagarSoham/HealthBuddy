@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+
+    <!-- ACCOUNT SECTION -->
+    <item
+        android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/icon_person"
+                android:title="Profile" />
+        </menu>
+    </item>
+
+    <!-- APP SETTINGS -->
+    <item
+        android:title="App Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_notifications"
+                android:icon="@drawable/notifications"
+                android:title="Notifications" />
+
+            <item
+                android:id="@+id/nav_dark_mode"
+                android:icon="@drawable/dark_mode"
+                android:title="Dark Mode" />
+
+            <item
+                android:id="@+id/nav_language"
+                android:icon="@drawable/language"
+                android:title="Language" />
+
+
+        </menu>
+    </item>
+
+    <!-- OTHER -->
+    <item
+        android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/nav_privacy"
+                android:icon="@drawable/shield"
+                android:title="Privacy Policy" />
+
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/info"
+                android:title="About App" />
+
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/support_agent"
+                android:title="Help &amp; Support" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/logout_icon"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>

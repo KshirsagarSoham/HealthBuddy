@@ -14,6 +14,9 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username AND password = :password")
     User validateLogin(String username, String password);  // Returns User if valid
 
+    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
+    User getUserByUsername(String username);
+
     @Update
     int updateUser(User user);  // Update by primary key
 

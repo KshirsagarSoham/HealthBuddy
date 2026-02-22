@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#E3F2FD"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/icon_person"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_background"
+        android:padding="2dp" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ganesh Datar"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:id="@+id/userSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stay Consistent 💙"
+        android:textSize="14sp"
+        android:textColor="#757575"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>
