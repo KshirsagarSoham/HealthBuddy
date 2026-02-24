@@ -44,4 +44,5 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     implementation ("androidx.preference:preference:1.2.1")
+    implementation ("com.google.android.material:material:1.11.0")
 }
