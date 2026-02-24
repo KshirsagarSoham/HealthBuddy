@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        applySavedTheme();
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -209,6 +211,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         }
         return true;
+    }
+
+    private void applySavedTheme() {
+
+        android.content.SharedPreferences prefs =
+                androidx.preference.PreferenceManager
+                        .getDefaultSharedPreferences(this);
+
+        String theme = prefs.getString("theme_preference", "system");
+
+        switch (theme) {
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+
+            default:
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
     }
 
 

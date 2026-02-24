@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:text="email@example.com"
                 android:textSize="16sp"
                 android:layout_marginTop="4dp"
-                android:textColor="#757575"/>
+                android:textColor="?attr/colorSurface"/>
         </LinearLayout>
 
         <!-- Info Section -->
@@ -72,13 +72,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp"
-                    android:background="@color/white">
+                    android:background="?attr/colorSurface"
+
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Mobile"
-                        android:textColor="#757575"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
 
@@ -86,8 +88,8 @@
                         android:id="@+id/tvMobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="+919021880"
-                        android:textColor="#212121"
+                        android:text="9876543210"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="16sp"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
@@ -106,13 +108,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp"
-                    android:background="@color/white">
+                    android:background="?attr/colorSurface">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Age"
-                        android:textColor="#757575"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
 
@@ -121,7 +123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="18"
-                        android:textColor="#212121"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="16sp"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
@@ -140,13 +142,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp"
-                    android:background="@color/white">
+                    android:background="?attr/colorSurface">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Height"
-                        android:textColor="#757575"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
 
@@ -155,7 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="160 cm"
-                        android:textColor="#212121"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="16sp"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
@@ -174,13 +176,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp"
-                    android:background="@color/white">
+                    android:background="?attr/colorSurface">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Weight"
-                        android:textColor="#757575"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
 
@@ -189,7 +191,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="51 kg"
-                        android:textColor="#212121"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="16sp"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
@@ -208,13 +210,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp"
-                    android:background="@color/white">
+                    android:background="?attr/colorSurface">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Gender"
-                        android:textColor="#757575"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
 
@@ -223,7 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="male"
-                        android:textColor="#212121"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="16sp"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
@@ -237,7 +239,7 @@
                 android:text="Edit Profile"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="#4A90E2"
-                android:textColor="#FFFFFF"
+                android:textColor="?attr/colorSurface"
                 android:elevation="2dp"
                 android:padding="12dp"
                 android:clipToOutline="true"

@@ -24,7 +24,7 @@
         android:text="Ganesh Datar"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#212121"
+        android:textColor="?attr/colorOnSurface"
         android:layout_marginTop="12dp" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="Stay Consistent 💙"
         android:textSize="14sp"
-        android:textColor="#757575"
+        android:textColor="?attr/colorOnSurface"
         android:layout_marginTop="4dp" />
 
 </LinearLayout>

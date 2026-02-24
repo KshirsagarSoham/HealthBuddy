@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/colorSurface"
     android:fillViewport="true">
 
     <LinearLayout
@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:padding="20dp"
-        android:background="#ffffff">
+        android:background="?attr/colorSurface">
 
         <!-- HEADER -->
         <LinearLayout
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BMI Calculator"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Check your Body Mass Index"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="center" />
@@ -77,6 +77,8 @@
             android:padding="20dp"
             android:elevation="6dp"
             android:layout_marginTop="50dp"
+            android:width="1dp"
+            android:color="?attr/colorOnSurface"
             >
 
             <!-- Age -->
@@ -93,7 +95,7 @@
                     android:text="Age"
                     android:textStyle="bold"
                     android:textSize="20dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="?attr/colorOnSurface"/>
 
                 <EditText
                     android:layout_width="180dp"
@@ -103,7 +105,7 @@
                     android:background="@drawable/bg_edittext"
                     android:padding="10dp"
                     android:layout_marginStart="75dp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     />
             </LinearLayout>
 
@@ -121,7 +123,7 @@
                     android:textSize="20dp"
                     android:text="Height\n(cm)"
                     android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textColor="?attr/colorOnSurface"/>
 
                 <EditText
                     android:layout_width="180dp"
@@ -132,7 +134,7 @@
                     android:background="@drawable/bg_edittext"
                     android:padding="10dp"
                     android:layout_marginStart="52dp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     />
             </LinearLayout>
 
@@ -150,7 +152,7 @@
                     android:text="Weight\n(kg)"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     />
 
                 <EditText
@@ -162,7 +164,7 @@
                     android:background="@drawable/bg_edittext"
                     android:padding="10dp"
                     android:layout_marginStart="50dp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     />
             </LinearLayout>
 
@@ -182,7 +184,7 @@
                     android:text="Male"
                     android:background="@drawable/bg_gender_button"
                     android:layout_marginEnd="8dp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -192,7 +194,7 @@
                     android:text="Female"
                     android:background="@drawable/bg_gender_button"
                     android:layout_marginStart="8dp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     />
             </LinearLayout>
 
@@ -202,7 +204,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/btnCalculate"
                 android:text="Calculate BMI"
-                android:textColor="#FFFFFF"
+                android:textColor="?attr/colorSurface"
                 android:textStyle="bold"
                 android:background="@drawable/bg_calculate_button"
                 android:layout_marginBottom="20dp"
@@ -231,7 +233,7 @@
                 android:text="BMI:"
                 android:textSize="25dp"
                 android:layout_marginStart="12dp"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 />
 
             <TextView
@@ -243,7 +245,7 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="25dp"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 />
 
            </LinearLayout>
@@ -260,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:text="Result:"
                 android:textSize="25sp"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 />
 
             <TextView
@@ -271,7 +273,7 @@
                 android:textStyle="bold"
                 android:textSize="25dp"
                 android:layout_marginStart="12dp"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 />
 
                 </LinearLayout>

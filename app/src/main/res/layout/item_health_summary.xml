@@ -7,7 +7,7 @@
     android:layout_margin="6dp"
     app:cardCornerRadius="14dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="#F7F9FC"
+    app:cardBackgroundColor="?attr/colorSurface"
     app:strokeColor="#E0E0E0"
     app:strokeWidth="1dp"
     >
@@ -33,7 +33,7 @@
             android:text="BMI"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="?attr/colorOnSurface"/>
 
         <TextView
             android:id="@+id/tvhealthsummaryvalue"
@@ -42,7 +42,7 @@
             android:layout_marginTop="4dp"
             android:text="22.4"
             android:textSize="13sp"
-            android:textColor="@color/black"/>
+            android:textColor="?attr/colorOnSurface"/>
 
     </LinearLayout>
 

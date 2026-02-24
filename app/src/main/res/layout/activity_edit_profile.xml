@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#E6F0FA"
+            android:background="?attr/colorSurface"
             android:paddingTop="32dp"
             android:paddingBottom="32dp"
             android:gravity="center_horizontal"
@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:inputType="textPersonName"
-                    android:textColor="#424242"
+                    android:textColor="?attr/colorOnSurface"
                     android:textColorHint="#B0B0B0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:inputType="phone"
-                    android:textColor="#424242"
+                    android:textColor="?attr/colorOnSurface"
                     android:textColorHint="#B0B0B0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:inputType="textEmailAddress"
-                    android:textColor="#424242"
+                    android:textColor="?attr/colorOnSurface"
                     android:textColorHint="#B0B0B0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:inputType="number"
-                    android:textColor="#424242"
+                    android:textColor="?attr/colorOnSurface"
                     android:textColorHint="#B0B0B0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:inputType="numberDecimal"
-                    android:textColor="#424242"
+                    android:textColor="?attr/colorOnSurface"
                     android:textColorHint="#B0B0B0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,7 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:inputType="numberDecimal"
-                    android:textColor="#424242"
+                    android:textColor="?attr/colorOnSurface"
                     android:textColorHint="#B0B0B0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,7 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:inputType="textPersonName"
-                    android:textColor="#424242"
+                    android:textColor="?attr/colorOnSurface"
                     android:textColorHint="#B0B0B0"/>
             </com.google.android.material.textfield.TextInputLayout>
 

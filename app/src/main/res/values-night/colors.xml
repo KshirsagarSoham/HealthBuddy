@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="greeting_start">#2C2C2C</color>
+    <color name="greeting_end">#1E1E1E</color>
+
+    <color name="wellness_circle_bg">#1F3A4D</color>
+</resources>
