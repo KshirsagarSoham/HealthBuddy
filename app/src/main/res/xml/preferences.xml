@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Appearance Section -->
+    <PreferenceCategory
+        android:title="Appearance">
+
+        <ListPreference
+            app:key="theme_preference"
+            app:title="Theme"
+            app:summary="Choose app theme"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:defaultValue="system" />
+
+    </PreferenceCategory>
+
+    <!-- Notifications Section -->
+    <PreferenceCategory
+        android:title="Notifications">
+
+        <SwitchPreferenceCompat
+            app:key="notifications_enabled"
+            app:title="Enable Notifications"
+            app:summary="Turn app notifications on or off"
+            app:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <!-- Language Section -->
+    <PreferenceCategory
+        android:title="Language">
+
+        <ListPreference
+            app:key="language_preference"
+            app:title="App Language"
+            app:summary="Select application language"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:defaultValue="en" />
+
+    </PreferenceCategory>
+
+    <!-- Advanced Section -->
+    <PreferenceCategory
+        android:title="Advanced">
+
+        <Preference
+            app:key="reset_data"
+            app:title="Reset App Data"
+            app:summary="Clear all saved health data" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

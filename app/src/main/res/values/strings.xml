@@ -4,4 +4,34 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open">Open Drawer</string>
     <string name="close">Close Drawer</string>
+
+
+<!--    for settings -->
+
+    <!-- Theme Options -->
+    <string-array name="theme_entries">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>System Default</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+    <!-- Language Options -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Hindi</item>
+        <item>Marathi</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>en</item>
+        <item>hi</item>
+        <item>mr</item>
+    </string-array>
+
 </resources>

@@ -99,13 +99,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(intent);
 
             } else if (id == R.id.nav_notifications) {
-                Toast.makeText(MainActivity.this, "Notifications clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Notifications clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+                startActivity(intent);
 
             } else if (id == R.id.nav_dark_mode) {
-                Toast.makeText(MainActivity.this, "Dark Mode clicked", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Dark Mode clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+                startActivity(intent);
 
             } else if (id == R.id.nav_language) {
-                Toast.makeText(MainActivity.this, "Language clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Language clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+                startActivity(intent);
 
             }  else if (id == R.id.nav_privacy) {
                 Toast.makeText(MainActivity.this, "Privacy Policy clicked", Toast.LENGTH_SHORT).show();
