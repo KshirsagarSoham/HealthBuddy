@@ -72,18 +72,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
 
-        String fullName = preferences.getString("username", "User");
+        String fullName = preferences.getString("username", "");
 
-        String firstName = fullName;
-        if (fullName.contains(" ")) {
-            firstName = fullName.substring(0, fullName.indexOf(" "));
+        if (fullName == null || fullName.trim().isEmpty()) {
+            userName.setText("User");
+        } else {
+
+            String firstName = fullName;
+
+            if (fullName.contains(" ")) {
+                firstName = fullName.substring(0, fullName.indexOf(" "));
+            }
+
+            if (firstName.length() > 0) {
+                firstName = firstName.substring(0, 1).toUpperCase() +
+                        firstName.substring(1).toLowerCase();
+            }
+
+            userName.setText(firstName);
         }
-
-        // Capitalize first letter
-        firstName = firstName.substring(0,1).toUpperCase() +
-                firstName.substring(1).toLowerCase();
-
-        userName.setText(firstName);
         toolbar.setTitle("Zenith Health");
 
 //sidebar items clicking
@@ -132,15 +139,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
             }  else if (id == R.id.nav_logout) {
-            // Clear SharedPreferences (Logout)
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            pref.edit().clear().apply();
 
-            // Navigate to LoginActivity
-            Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(logoutIntent);
-            finish();
-        }
+                SharedPreferences pref = PreferenceManager
+                        .getDefaultSharedPreferences(MainActivity.this);
+
+                pref.edit().putBoolean("islogin", false).apply();   // ✅ only logout
+
+                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(logoutIntent);
+                finish();
+            }
 
             // Close the drawer after selection
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -210,14 +218,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==R.id.logoutMenu)
-        {
-            Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-            startActivity(intent);
-            editor.putBoolean("islogin",false).commit();
 
+        if (item.getItemId() == R.id.logoutMenu) {
+
+            editor.putBoolean("islogin", false).apply();
+
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+            finish();
+            return true;
         }
-        return true;
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void applySavedTheme() {
