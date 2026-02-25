@@ -5,4 +5,52 @@
         <!-- Customize colors later if needed -->
     </style>
 
+    <!-- Left Button Shape -->
+    <style name="ShapeAppearance.CustomButtonLeft"
+        parent="ShapeAppearance.Material3.MediumComponent">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+
+    </style>
+
+    <!-- Right Button Shape -->
+    <style name="ShapeAppearance.CustomButtonRight"
+        parent="ShapeAppearance.Material3.MediumComponent">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+
+    </style>
+
+    <!-- Left Button Widget Style -->
+    <style name="Widget.RealHealthBuddy.LeftButton"
+        parent="Widget.Material3.Button">
+
+        <!-- IMPORTANT -->
+        <item name="android:elevation">0dp</item>
+        <item name="backgroundTint">#CCFFFFFF</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearance.CustomButtonLeft
+        </item>
+
+    </style>
+
+    <!-- Right Button Widget Style -->
+    <style name="Widget.RealHealthBuddy.RightButton"
+        parent="Widget.Material3.Button">
+
+        <item name="android:elevation">0dp</item>
+        <item name="backgroundTint">#FFFFFFFF</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearance.CustomButtonRight
+        </item>
+
+    </style>
 </resources>

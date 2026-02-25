@@ -31,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 selectButton(btnSignIn);
                 deselectButton(btnSignUp);
-                // TODO: Navigate to LoginActivity
+
                 Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
@@ -42,7 +42,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 selectButton(btnSignUp);
                 deselectButton(btnSignIn);
-                // TODO: Navigate to RegistrationActivity
+
                 Intent intent = new Intent(WelcomeActivity.this, RegistrationActivity.class);
                 startActivity(intent);
             }
@@ -57,7 +57,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void deselectButton(MaterialButton button) {
         // Semi-transparent white when unselected
-        button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#33FFFFFF")));
-        button.setTextColor(Color.WHITE);
+        button.setBackgroundTintList(
+                ColorStateList.valueOf(Color.parseColor("#66FFFFFF"))
+        );        button.setTextColor(Color.BLACK);
     }
 }

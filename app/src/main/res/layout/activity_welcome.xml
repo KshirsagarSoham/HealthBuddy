@@ -25,15 +25,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your journey to better health starts here.!"
         android:textSize="20sp"
-        android:textColor="#044C6D"
-        android:textStyle="bold"
+        android:textColor="#06222E"
+        android:textStyle="normal"
         android:fontFamily="sans-serif-medium"
         android:letterSpacing="0.02"
 
@@ -41,15 +41,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintVertical_bias="0.28" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in to Continue.."
         android:textSize="20sp"
-        android:textColor="#044C6D"
-        android:textStyle="bold"
+        android:textColor="#022231"
+        android:textStyle="normal"
         android:fontFamily="sans-serif-medium"
         android:letterSpacing="0.02"
 
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.31" />
 
 
 
@@ -70,33 +70,33 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.59"
+        >
 
         <!-- Sign In -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignIn"
+            style="@style/Widget.RealHealthBuddy.LeftButton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="Sign In"
-            android:textColor="@android:color/white"
-            android:fontFamily="sans-serif-medium"
-            android:background="@drawable/btn_signin_background"
+            android:textColor="@color/black"
             app:rippleColor="@android:color/white"
             android:layout_marginEnd="6dp" />
 
-        <!-- Sign Up -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignUp"
+            style="@style/Widget.RealHealthBuddy.RightButton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="Sign Up"
-            android:textColor="@android:color/white"
-            android:fontFamily="sans-serif-medium"
-            android:background="@drawable/btn_signup_background"
+            android:textColor="@color/black"
             app:rippleColor="@android:color/white"
             android:layout_marginStart="6dp" />
 

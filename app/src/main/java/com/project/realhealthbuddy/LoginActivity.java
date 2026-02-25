@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +28,12 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     CheckBox cbshowpass;
-    Button btnLogin, btnRegistration;
+    Button btnLogin;
+
+    TextView tvRegistration;
+
+    TextView tvBack;
+    LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +47,12 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etLoginUsername);
         etPassword = findViewById(R.id.etLoginPassword);
         btnLogin = findViewById(R.id.btnLoginLogin);
-        btnRegistration = findViewById(R.id.btnLoginRegister);
+        tvRegistration = findViewById(R.id.tvLoginRegister);
         cbshowpass = findViewById(R.id.CBshowpasswordLOGIN);
+
+        tvBack = findViewById(R.id.tvBack);
+
+        layout = findViewById(R.id.googlefacebooklogin);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -83,13 +94,30 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnRegistration.setOnClickListener(new View.OnClickListener() {
+        tvRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
             }
         });
+
+        tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(LoginActivity.this, "This feature will come soon !", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void validlogin(String inputName, String inputPassword) {
