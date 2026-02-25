@@ -116,13 +116,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(intent);
 
             }  else if (id == R.id.nav_privacy) {
-                Toast.makeText(MainActivity.this, "Privacy Policy clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Privacy Policy ", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, PrivacyPolicyActivity.class);
+                startActivity(intent);
 
             } else if (id == R.id.nav_about) {
                 Toast.makeText(MainActivity.this, "About App clicked", Toast.LENGTH_SHORT).show();
 
             } else if (id == R.id.nav_help) {
                 Toast.makeText(MainActivity.this, "Help & Support clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, HelpSupportActivity.class);
+                startActivity(intent);
+
 
             }  else if (id == R.id.nav_logout) {
             // Clear SharedPreferences (Logout)

@@ -37,4 +37,10 @@
 
     <color name="wellness_circle_bg">#BBDFFB</color>
 
+
+    <color name="webview_bg">#FFFFFF</color>
+    <color name="webview_text">#2C2C2C</color>
+    <color name="webview_heading">#00796B</color>
+    <color name="webview_link">#0288D1</color>
+
 </resources>
