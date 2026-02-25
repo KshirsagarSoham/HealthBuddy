@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             } else if (id == R.id.nav_about) {
                 Toast.makeText(MainActivity.this, "About App clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, AboutUsActivity.class);
+                startActivity(intent);
 
             } else if (id == R.id.nav_help) {
                 Toast.makeText(MainActivity.this, "Help & Support clicked", Toast.LENGTH_SHORT).show();
