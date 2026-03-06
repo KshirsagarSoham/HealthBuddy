@@ -44,4 +44,13 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     implementation ("androidx.preference:preference:1.2.1")
+    implementation ("androidx.appcompat:appcompat:1.7.0")
+    implementation ("com.google.android.material:material:1.12.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    implementation("com.airbnb.android:lottie:6.4.1")
+    implementation ("androidx.preference:preference-ktx:1.2.1")
+    implementation ("androidx.legacy:legacy-preference-v14:1.0.0")
+
+
 }

@@ -3,7 +3,7 @@ package com.project.realhealthbuddy;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.Preference;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,13 +20,14 @@ import androidx.core.view.GravityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.project.realhealthbuddy.Fragments.HistoryFragment;
+import com.project.realhealthbuddy.Fragments.ProgressFragment;
 import com.project.realhealthbuddy.Fragments.HomeFragment;
 import com.project.realhealthbuddy.Fragments.MedicineFragment;
 import com.project.realhealthbuddy.Fragments.MeditationFragment;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.
         OnNavigationItemSelectedListener {
@@ -184,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     HomeFragment homeFragment = new HomeFragment();
     MedicineFragment medicineFragment = new MedicineFragment();
     MeditationFragment meditationFragment = new MeditationFragment();
-    HistoryFragment historyFragment = new HistoryFragment();
+    ProgressFragment historyFragment = new ProgressFragment();
 
 
     @Override

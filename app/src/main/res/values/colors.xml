@@ -7,6 +7,9 @@
     <color name="gray">#888888</color>
 
 
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="purple_500">#9C27B0</color>
     <color name="quick_actions_bg">#F5F7FA</color>
 
 
