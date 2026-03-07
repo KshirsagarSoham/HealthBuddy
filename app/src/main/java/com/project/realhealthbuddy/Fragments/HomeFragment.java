@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment {
         med1.setOnClickListener(v -> openMedicineFragment());
         med2.setOnClickListener(v -> openMedicineFragment());
 
-        //mcvAddMed.setOnClickListener(v -> openMedicineFragment());
+        mcvAddMed.setOnClickListener(v -> openMedicineFragment());
 
         viewAll.setOnClickListener(v -> openMedicineFragment());
 

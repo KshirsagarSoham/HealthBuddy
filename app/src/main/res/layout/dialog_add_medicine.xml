@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@android:color/white">
+
+    <!-- Medicine Name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDICINE NAME *"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.10"
+        android:textColor="#8AAEE0"
+        android:layout_marginBottom="6dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g. Paracetamol, Vitamin D"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxStrokeColor="#C6DBF7"
+        app:hintTextColor="#8AAEE0"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_medicine_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:imeOptions="actionNext"
+            android:textColor="#1A2E4A"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Dosage -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DOSAGE"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.10"
+        android:textColor="#8AAEE0"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="6dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g. 1 tablet, 5ml, 500mg"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxStrokeColor="#C6DBF7"
+        app:hintTextColor="#8AAEE0"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_dosage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="#1A2E4A"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Timings -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DOSE TIMINGS * (MAX 3)"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.10"
+        android:textColor="#8AAEE0"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btn_add_timing"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="⏰  Pick a Time"
+        android:textSize="13sp"
+        android:textColor="#5D96E2"
+        android:backgroundTint="#EEF5FD"
+        android:letterSpacing="0"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+    <TextView
+        android:id="@+id/tv_selected_timings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="No timings selected yet"
+        android:textColor="#A3C4F0"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <!-- Warning -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#FFF8E1"
+        android:padding="10dp"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚠️"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="Alarms will ring daily at the selected times"
+            android:textSize="12sp"
+            android:textColor="#B45309" />
+
+    </LinearLayout>
+
+</LinearLayout>

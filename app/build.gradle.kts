@@ -51,6 +51,9 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.4.1")
     implementation ("androidx.preference:preference-ktx:1.2.1")
     implementation ("androidx.legacy:legacy-preference-v14:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
 
 
 }
