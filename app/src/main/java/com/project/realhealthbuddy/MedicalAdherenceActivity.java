@@ -73,7 +73,6 @@ public class MedicalAdherenceActivity extends AppCompatActivity {
         doseList = new ArrayList<>();
 
         SharedPreferences sp = getSharedPreferences("med_prefs", MODE_PRIVATE);
-
         String json = sp.getString("medicines", null);
 
         if (json == null) return;
@@ -89,13 +88,14 @@ public class MedicalAdherenceActivity extends AppCompatActivity {
                 String name = o.getString("name");
 
                 org.json.JSONArray timings = o.getJSONArray("timings");
+                org.json.JSONArray status = o.getJSONArray("takenStatus");
 
                 for (int j = 0; j < timings.length(); j++) {
 
                     String time = timings.getString(j);
+                    boolean taken = status.getBoolean(j);
 
-                    doseList.add(new DoseModel(name, time, false));
-
+                    doseList.add(new DoseModel(name, time, taken));
                 }
             }
 

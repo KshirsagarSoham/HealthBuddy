@@ -87,7 +87,7 @@ public class DoseAdapter extends RecyclerView.Adapter<DoseAdapter.ViewHolder> {
         try {
 
             java.text.SimpleDateFormat format =
-                    new java.text.SimpleDateFormat("hh:mm a");
+                    new java.text.SimpleDateFormat("HH:mm");
 
             java.util.Calendar now = java.util.Calendar.getInstance();
 

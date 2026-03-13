@@ -31,12 +31,19 @@ import com.project.realhealthbuddy.SleepBottomSheet;
 import com.project.realhealthbuddy.Steps.Data.StepsEntity;
 import com.project.realhealthbuddy.Steps.Repository.StepsRepository;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import java.util.ArrayList;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class HomeFragment extends Fragment {
@@ -95,13 +102,15 @@ public class HomeFragment extends Fragment {
 //==========================================================================================================
 
         list = new ArrayList<>();
+        int medPercent = getMedicineAdherencePercent();
 
 
         list.add(new HealthSummaryItem(R.drawable.bmi, "BMI Calculator", "0.00",HealthSummaryItem.TYPE_BMI));
         list.add(new HealthSummaryItem(R.drawable.steps, "Steps", String.valueOf(todaySteps), HealthSummaryItem.TYPE_STEPS));
         list.add(new HealthSummaryItem(R.drawable.sleep, "Sleep", "0h 0m",HealthSummaryItem.TYPE_SLEEP));
         list.add(new HealthSummaryItem(R.drawable.water, "Water", "0.0",HealthSummaryItem.TYPE_WATER));
-        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh.", "0",HealthSummaryItem.TYPE_MED));
+        list.add(new HealthSummaryItem(R.drawable.medical_adherence, "Med Adh.", medPercent + "%", HealthSummaryItem.TYPE_MED));
+
 
 
 
@@ -143,50 +152,76 @@ public class HomeFragment extends Fragment {
         TextView time2 = med2.findViewById(R.id.tvMedicineTime);
         TextView status2 = med2.findViewById(R.id.tvMedicineStatus);
 
-        //  for hiding/showing medicine list
+// Empty state containers
         LinearLayout layoutNoMedicine = view.findViewById(R.id.layoutNoMedicine);
         LinearLayout layoutMedicineList = view.findViewById(R.id.layoutMedicineList);
 
-       // TEMPORARY flag (later this comes from DB)
-        boolean hasMedicinesToday = false;
 
+// Load today's medicines
+        List<TodayDose> todayDoses = loadTodayDoses();
+        Collections.sort(todayDoses, Comparator.comparing(d -> d.time));
+
+        List<TodayDose> upcomingDoses = new ArrayList<>();
+
+        for (TodayDose dose : todayDoses) {
+
+            String status = getDoseStatus(dose.time, dose.taken);
+
+            if (status.equals("Upcoming")) {
+                upcomingDoses.add(dose);
+            }
+        }
+
+        boolean hasMedicinesToday = !upcomingDoses.isEmpty();
+
+
+// Show / Hide empty state
         if (!hasMedicinesToday) {
+
             layoutMedicineList.setVisibility(View.GONE);
             layoutNoMedicine.setVisibility(View.VISIBLE);
-        }
-        else {
+
+        } else {
+
             layoutMedicineList.setVisibility(View.VISIBLE);
             layoutNoMedicine.setVisibility(View.GONE);
+
+            // FIRST MEDICINE
+            TodayDose d1 = upcomingDoses.get(0);
+
+            name1.setText(d1.name);
+            time1.setText(d1.time);
+
+            String statusText1 = getDoseStatus(d1.time, d1.taken);
+            status1.setText(statusText1);
+            setStatusStyle(status1, statusText1);
+
+
+            // SECOND MEDICINE
+                if (upcomingDoses.size() > 1){
+
+                    TodayDose d2 = upcomingDoses.get(1);
+
+                name2.setText(d2.name);
+                time2.setText(d2.time);
+
+                String statusText2 = getDoseStatus(d2.time, d2.taken);
+                status2.setText(statusText2);
+                setStatusStyle(status2, statusText2);
+
+                med2.setVisibility(View.VISIBLE);
+
+            } else {
+
+                med2.setVisibility(View.GONE);
+            }
         }
 
 
-
-        // Smaller text for Home
-        name1.setTextSize(14);
-        time1.setTextSize(12);
-        status1.setTextSize(11);
-
-        name2.setTextSize(14);
-        time2.setTextSize(12);
-        status2.setTextSize(11);
-
-        name1.setText("Paracetamol");
-        time1.setText("9:00 AM");
-        status1.setText("Upcoming");
-
-        name2.setText("Vitamin D");
-        time2.setText("2:00 PM");
-        status2.setText("Upcoming");
-
-        status1.setBackgroundResource(R.drawable.bg_status_upcoming);
-        status2.setBackgroundResource(R.drawable.bg_status_upcoming);
-
-
+// Click listeners
         med1.setOnClickListener(v -> openMedicineFragment());
         med2.setOnClickListener(v -> openMedicineFragment());
-
         mcvAddMed.setOnClickListener(v -> openMedicineFragment());
-
         viewAll.setOnClickListener(v -> openMedicineFragment());
 
 //============================================================================================================
@@ -302,6 +337,7 @@ public class HomeFragment extends Fragment {
         updateSleepCard();
         loadTodaySteps();
 
+
         SharedPreferences prefs = requireContext()
                 .getSharedPreferences("health_data", Context.MODE_PRIVATE);
 
@@ -399,7 +435,146 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    private int getMedicineAdherencePercent() {
 
+        int totalDoses = 0;
+        int takenDoses = 0;
 
+        SharedPreferences sp = requireContext()
+                .getSharedPreferences("med_prefs", Context.MODE_PRIVATE);
+
+        String json = sp.getString("medicines", null);
+
+        if (json == null) return 0;
+
+        try {
+
+            org.json.JSONArray arr = new org.json.JSONArray(json);
+
+            for (int i = 0; i < arr.length(); i++) {
+
+                org.json.JSONObject o = arr.getJSONObject(i);
+
+                org.json.JSONArray timings = o.getJSONArray("timings");
+                org.json.JSONArray status = o.getJSONArray("takenStatus");
+
+                totalDoses += timings.length();
+
+                for (int j = 0; j < status.length(); j++) {
+
+                    if (status.getBoolean(j)) {
+                        takenDoses++;
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (totalDoses == 0) return 0;
+
+        return (takenDoses * 100) / totalDoses;
+    }
+
+    // #1 for todays medicine (feature no. 3)
+    private static class TodayDose {
+        String name;
+        String time;
+        boolean taken;
+
+        TodayDose(String name, String time, boolean taken) {
+            this.name = name;
+            this.time = time;
+            this.taken = taken;
+        }
+    }
+
+    // #2 for todays medicine (feature no. 3)
+
+    private List<TodayDose> loadTodayDoses() {
+
+        List<TodayDose> list = new ArrayList<>();
+
+        SharedPreferences sp = requireContext()
+                .getSharedPreferences("med_prefs", Context.MODE_PRIVATE);
+
+        String json = sp.getString("medicines", null);
+
+        if (json == null) return list;
+
+        try {
+
+            JSONArray arr = new JSONArray(json);
+
+            for (int i = 0; i < arr.length(); i++) {
+
+                JSONObject o = arr.getJSONObject(i);
+
+                String name = o.getString("name");
+
+                JSONArray timings = o.getJSONArray("timings");
+                JSONArray status = o.getJSONArray("takenStatus");
+
+                for (int j = 0; j < timings.length(); j++) {
+
+                    String time = timings.getString(j);
+                    boolean taken = status.getBoolean(j);
+
+                    list.add(new TodayDose(name, time, taken));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    // #3 for todays medicine (feature no. 3)
+    private String getDoseStatus(String time, boolean taken) {
+
+        if (taken) return "Taken";
+
+        try {
+
+            SimpleDateFormat format =
+                    new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+            Date doseTime = format.parse(time);
+
+            Calendar now = Calendar.getInstance();
+            Calendar doseCal = Calendar.getInstance();
+            doseCal.setTime(doseTime);
+
+            doseCal.set(now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH));
+
+            if (now.after(doseCal)) {
+                return "Missed";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Upcoming";
+    }
+
+    // #4 for todays medicine (feature no. 3)
+    private void setStatusStyle(TextView tv, String status) {
+
+        if (status.equals("Taken")) {
+            tv.setBackgroundResource(R.drawable.bg_status_taken);
+        }
+        else if (status.equals("Missed")) {
+            tv.setBackgroundResource(R.drawable.bg_status_missed);
+        }
+        else {
+            tv.setBackgroundResource(R.drawable.bg_status_upcoming);
+        }
+    }
 
 }

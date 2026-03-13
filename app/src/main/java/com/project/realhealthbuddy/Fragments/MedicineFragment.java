@@ -61,6 +61,9 @@ public class MedicineFragment extends Fragment implements MedicineAdapter.Listen
     private static final String PREFS = "med_prefs";
     private static final String KEY   = "medicines";
 
+    // Daily reset of doses at midnight
+    private static final String KEY_LAST_RESET = "last_reset_date";
+
     // ─────────────────────────────────────────────
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +87,8 @@ public class MedicineFragment extends Fragment implements MedicineAdapter.Listen
 
         // Load saved medicines
         medicineList = loadFromPrefs();
+
+        resetDailyIfNeeded();
 
         // Setup RecyclerView
         adapter = new MedicineAdapter(requireContext(), medicineList, this);
@@ -362,5 +367,35 @@ public class MedicineFragment extends Fragment implements MedicineAdapter.Listen
             }
         } catch (JSONException e) { e.printStackTrace(); }
         return list;
+    }
+
+    private void resetDailyIfNeeded() {
+
+        SharedPreferences sp = requireContext()
+                .getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+
+        String lastReset = sp.getString(KEY_LAST_RESET, "");
+
+        String today = android.text.format.DateFormat
+                .getDateFormat(requireContext())
+                .format(new java.util.Date());
+
+        if (!today.equals(lastReset)) {
+
+            for (Medicine m : medicineList) {
+
+                List<Boolean> newStatus = new ArrayList<>();
+
+                for (int i = 0; i < m.getTimings().size(); i++) {
+                    newStatus.add(false);
+                }
+
+                m.setTakenStatus(newStatus);
+            }
+
+            saveToPrefs();
+
+            sp.edit().putString(KEY_LAST_RESET, today).apply();
+        }
     }
 }
