@@ -1,29 +1,35 @@
 package com.project.realhealthbuddy;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.project.realhealthbuddy.Fragments.HomeFragment;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class BMI_Activity extends AppCompatActivity {
 
     ImageView back;
 
+    TextInputEditText etHeight, etWeight, etAge;
+
+    TextView tvBmiValue, tvResult, tvHealthTip;
+    TextView barUnder, barNormal, barOver, barObese;
+    TextView tvInfoTitle, tvInfo;
+
+    ProgressBar bmiMeter;
+
+    View resultLayout;
+    ImageView bmiPointer;
+    LinearLayout bmiBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,107 +38,152 @@ public class BMI_Activity extends AppCompatActivity {
 
         back = findViewById(R.id.backbutton);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        etHeight = findViewById(R.id.etHeight);
+        etWeight = findViewById(R.id.etWeight);
+        etAge = findViewById(R.id.etAge);
+
+        tvBmiValue = findViewById(R.id.tvBmiValue);
+        tvResult = findViewById(R.id.tvResult);
+        tvHealthTip = findViewById(R.id.tvHealthTip);
+
+        barUnder = findViewById(R.id.barUnder);
+        barNormal = findViewById(R.id.barNormal);
+        barOver = findViewById(R.id.barOver);
+        barObese = findViewById(R.id.barObese);
+
+        tvInfoTitle = findViewById(R.id.tvBmiInfoTitle);
+        tvInfo = findViewById(R.id.tvBmiInfo);
+
+        bmiMeter = findViewById(R.id.bmiMeter);
+
+        resultLayout = findViewById(R.id.resultLayout);
+
+        bmiPointer = findViewById(R.id.bmiPointer);
+        bmiBar = findViewById(R.id.bmiBar);
+
+        findViewById(R.id.btnCalculate).setOnClickListener(v -> calculateBMI());
+        findViewById(R.id.btnReset).setOnClickListener(v -> resetFields());
+
+        back.setOnClickListener(v -> finish());
+
+        tvInfoTitle.setOnClickListener(v -> {
+            if (tvInfo.getVisibility() == View.GONE)
+                tvInfo.setVisibility(View.VISIBLE);
+            else
+                tvInfo.setVisibility(View.GONE);
         });
+    }
 
-        EditText etHeight = findViewById(R.id.etHeight);
-        EditText etWeight = findViewById(R.id.etWeight);
-        Button btnCalculate = findViewById(R.id.btnCalculate);
+    private void calculateBMI() {
 
-        TextView tvBmiValue = findViewById(R.id.tvBmiValue);
-        TextView tvResult = findViewById(R.id.tvResult);
+        String heightStr = etHeight.getText().toString().trim();
+        String weightStr = etWeight.getText().toString().trim();
 
-        LinearLayout resultLayout = findViewById(R.id.resultLayout);
+        if (heightStr.isEmpty() || weightStr.isEmpty()) {
+            Toast.makeText(this, "Enter height and weight", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        btnCalculate.setOnClickListener(v -> {
+        double height = Double.parseDouble(heightStr) / 100;
+        double weight = Double.parseDouble(weightStr);
 
-            String heightStr = etHeight.getText().toString().trim();
-            String weightStr = etWeight.getText().toString().trim();
+        double bmi = weight / (height * height);
 
-            // ✅ Input validation
-            if (heightStr.isEmpty() || weightStr.isEmpty()) {
-                Toast.makeText(this, "Please enter height and weight", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        movePointer(bmi);
 
-            double heightCm = Double.parseDouble(heightStr);
-            double weightKg = Double.parseDouble(weightStr);
+        String bmiFormatted = String.format("%.1f", bmi);
 
-            // Prevent zero crash
-            if (heightCm <= 0 || weightKg <= 0) {
-                Toast.makeText(this, "Invalid values entered", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        tvBmiValue.setText(bmiFormatted);
 
-            // ✅ BMI Formula
-            double heightM = heightCm / 100.0;
-            double bmi = weightKg / (heightM * heightM);
+        bmiMeter.setProgress((int) bmi);
 
-            // Round to 1 decimal
-            String bmiFormatted = String.format("%.1f", bmi);
+        String category;
+        String tip;
 
-            SharedPreferences prefs = getSharedPreferences("health_data", MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("bmi_value", bmiFormatted);
-            editor.apply();
+        if (bmi < 18.5) {
+            category = "Underweight";
+            tip = "You are underweight. Increase calorie intake.";
+            highlightBar(barUnder);
+        } else if (bmi < 25) {
+            category = "Normal";
+            tip = "Great! Maintain balanced diet and exercise.";
+            highlightBar(barNormal);
+        } else if (bmi < 30) {
+            category = "Overweight";
+            tip = "Try regular exercise and reduce sugary foods.";
+            highlightBar(barOver);
+        } else {
+            category = "Obese";
+            tip = "Consult a doctor and start a fitness plan.";
+            highlightBar(barObese);
+        }
 
-            tvBmiValue.setText(bmiFormatted);
+        tvResult.setText(category);
+        tvHealthTip.setText("💡 " + tip);
 
-            // ✅ Category Logic
-            String category;
+        SharedPreferences prefs = getSharedPreferences("health_data", MODE_PRIVATE);
+        prefs.edit().putString("bmi_value", bmiFormatted).apply();
+
+        resultLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void highlightBar(TextView selected) {
+
+        barUnder.setAlpha(0.5f);
+        barNormal.setAlpha(0.5f);
+        barOver.setAlpha(0.5f);
+        barObese.setAlpha(0.5f);
+
+        selected.setAlpha(1f);
+    }
+
+    private void resetFields() {
+
+        etAge.setText("");
+        etHeight.setText("");
+        etWeight.setText("");
+
+        resultLayout.setVisibility(View.GONE);
+
+        barUnder.setAlpha(1f);
+        barNormal.setAlpha(1f);
+        barOver.setAlpha(1f);
+        barObese.setAlpha(1f);
+    }
+
+    private void movePointer(double bmi) {
+
+        bmiBar.post(() -> {
+
+            int barWidth = bmiBar.getWidth();
+            float segmentWidth = barWidth / 4f;
+
+            float position;
 
             if (bmi < 18.5) {
-                category = "Underweight";
+                position = (float) ((bmi / 18.5) * segmentWidth);
+
             } else if (bmi < 25) {
-                category = "Normal";
+                position = segmentWidth +
+                        (float) ((bmi - 18.5) / (25 - 18.5) * segmentWidth);
+
             } else if (bmi < 30) {
-                category = "Overweight";
+                position = segmentWidth * 2 +
+                        (float) ((bmi - 25) / (30 - 25) * segmentWidth);
+
             } else {
-                category = "Obese";
+                double cappedBmi = Math.min(bmi, 40);
+                position = segmentWidth * 3 +
+                        (float) ((cappedBmi - 30) / (40 - 30) * segmentWidth);
             }
 
-            tvResult.setText(category);
+            position -= bmiPointer.getWidth() / 2f;
 
-            if (bmi < 18.5) {
-                tvResult.setTextColor(Color.BLUE);
-            } else if (bmi < 25) {
-                tvResult.setTextColor(Color.GREEN);
-            } else if (bmi < 30) {
-                tvResult.setTextColor(Color.rgb(255,165,0)); // Orange
-            } else {
-                tvResult.setTextColor(Color.RED);
-            }
-
-            // Show layout
-            resultLayout.setVisibility(View.VISIBLE);
-
-            // Animate
-            resultLayout.setAlpha(0f);
-            resultLayout.setTranslationY(100f);
-
-            resultLayout.animate()
-                    .alpha(1f)
-                    .translationY(0f)
-                    .setDuration(400)
+            bmiPointer.animate()
+                    .translationX(position)
+                    .setDuration(600)
+                    .setInterpolator(new OvershootInterpolator(1.2f))
                     .start();
-
-
-
-//            Intent resultIntent = new Intent();
-//            resultIntent.putExtra("bmi_value", bmiFormatted);
-//            setResult(RESULT_OK, resultIntent);
-
-
         });
-
-
-
-
-
-
     }
 }

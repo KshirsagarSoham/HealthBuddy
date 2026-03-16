@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     TextInputEditText etFullName, etMobile, etEmail, etAge, etHeight, etWeight, etGender;
     Button btnSave;
+    private ImageView profileImage, btnAddPhoto;
+    private static final int PICK_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
