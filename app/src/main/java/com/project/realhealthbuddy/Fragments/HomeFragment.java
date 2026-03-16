@@ -2,6 +2,7 @@ package com.project.realhealthbuddy.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -55,6 +56,8 @@ public class HomeFragment extends Fragment {
     private ArrayList<HealthSummaryItem> list;
     private HealthSummaryAdapter adapter;
 
+    private ImageView greetingImage;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +70,9 @@ public class HomeFragment extends Fragment {
 
         preferences= PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor=preferences.edit();
+
+        greetingImage = view.findViewById(R.id.ivhomeprofileimage);
+        loadGreetingProfileImage();
 
         String fullName = preferences.getString("username","User");
 
@@ -82,6 +88,9 @@ public class HomeFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault());
         String today = "Today is "+ sdf.format(new Date());
         tvDateandTime.setText(today);
+
+
+
 
 
         StepsRepository repository = new StepsRepository(requireActivity().getApplication());
@@ -330,13 +339,29 @@ public class HomeFragment extends Fragment {
         bottomNav.setSelectedItemId(R.id.homebottommenuMedicine);
     }
 
+    private void loadGreetingProfileImage() {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        String imageUri = prefs.getString("profile_image", null);
+
+        try {
+            if (imageUri != null) {
+                greetingImage.setImageURI(Uri.parse(imageUri));
+            } else {
+                greetingImage.setImageResource(R.drawable.icon_person);
+            }
+        } catch (Exception e) {
+            greetingImage.setImageResource(R.drawable.icon_person);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         updateWaterCard();
         updateSleepCard();
         loadTodaySteps();
-
+        loadGreetingProfileImage();
 
         SharedPreferences prefs = requireContext()
                 .getSharedPreferences("health_data", Context.MODE_PRIVATE);
@@ -353,6 +378,8 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
     }
+
+
 
 
     public void updateWaterCard() {

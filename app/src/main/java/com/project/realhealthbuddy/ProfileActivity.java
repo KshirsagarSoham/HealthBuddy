@@ -2,6 +2,7 @@ package com.project.realhealthbuddy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Button;
@@ -66,6 +67,18 @@ public class ProfileActivity extends AppCompatActivity {
         tvHeight.setText(height);
         tvWeight.setText(weight);
         tvGender.setText(gender);
+
+
+        String imageUri = prefs.getString("profile_image", null);
+
+        if (imageUri != null) {
+            try {
+                Uri uri = Uri.parse(imageUri);
+                profileImage.setImageURI(uri);
+            } catch (Exception e) {
+                profileImage.setImageResource(R.drawable.icon_person);
+            }
+        }
 
         // Load Full Name, Email, Mobile from Room
         AppDatabase db = AppDatabase.getDatabase(this);

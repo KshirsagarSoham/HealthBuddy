@@ -2,6 +2,7 @@ package com.project.realhealthbuddy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.preference.Preference;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,8 +96,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         toolbar.setTitle("Zenith Health");
 
-//sidebar items clicking
+         //sidebar items clicking
 
+
+        loadSidebarProfileImage();
+
+        ImageView sidebarProfileImage = headerView.findViewById(R.id.sidebarProfileImage);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String imageUri = prefs.getString("profile_image", null);
+
+        if (imageUri != null) {
+            try {
+                Uri uri = Uri.parse(imageUri);
+                sidebarProfileImage.setImageURI(uri);
+            } catch (Exception e) {
+                sidebarProfileImage.setImageResource(R.drawable.icon_person);
+            }
+        }
 
         DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -182,6 +199,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadSidebarProfileImage();
+    }
+
     HomeFragment homeFragment = new HomeFragment();
     MedicineFragment medicineFragment = new MedicineFragment();
     MeditationFragment meditationFragment = new MeditationFragment();
@@ -261,5 +284,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    private void loadSidebarProfileImage() {
+
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView sidebarProfileImage = headerView.findViewById(R.id.sidebarProfileImage);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String imageUri = prefs.getString("profile_image", null);
+
+        try {
+            if (imageUri != null) {
+                sidebarProfileImage.setImageURI(Uri.parse(imageUri));
+            } else {
+                sidebarProfileImage.setImageResource(R.drawable.icon_person);
+            }
+        } catch (Exception e) {
+            sidebarProfileImage.setImageResource(R.drawable.icon_person);
+        }
+    }
 
 }
