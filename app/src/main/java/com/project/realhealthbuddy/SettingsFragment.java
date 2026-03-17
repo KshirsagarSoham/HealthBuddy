@@ -17,6 +17,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 import androidx.preference.SwitchPreferenceCompat;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.ListPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -52,6 +54,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             });
         }
 
+        // ** for notification **
         SwitchPreferenceCompat notificationPref =
                 findPreference("notifications_enabled");
 
@@ -99,6 +102,37 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
                     return true; // Allow turning off
                 }
+            });
+        }
+
+        /// ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // for theme
+
+        ListPreference themePref = findPreference("theme_preference");
+
+        if (themePref != null) {
+            themePref.setOnPreferenceChangeListener((preference, newValue) -> {
+
+                String selectedTheme = newValue.toString();
+
+                switch (selectedTheme) {
+                    case "light":
+                        AppCompatDelegate.setDefaultNightMode(
+                                AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+
+                    case "dark":
+                        AppCompatDelegate.setDefaultNightMode(
+                                AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+
+                    case "system":
+                        AppCompatDelegate.setDefaultNightMode(
+                                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        break;
+                }
+
+                return true; // Allow change
             });
         }
 

@@ -6,7 +6,7 @@
     <string name="close">Close Drawer</string>
 
 
-<!--    for settings -->
+    <!--    for settings -->
 
     <!-- Theme Options -->
     <string-array name="theme_entries">

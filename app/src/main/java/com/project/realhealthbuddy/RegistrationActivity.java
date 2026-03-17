@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.room.Room;
 import android.content.Context;
@@ -48,8 +49,11 @@ public class RegistrationActivity extends AppCompatActivity {
         etEmailID = findViewById(R.id.etRegisterEmail);
         etUsername = findViewById(R.id.etRegisterUsername);
         etPassword = findViewById(R.id.etRegisterPassword);
-        cbShowHidePassword = findViewById(R.id.cbshowhidepassword);
+//        cbShowHidePassword = findViewById(R.id.cbshowhidepassword);
         btnRegister = findViewById(R.id.btnRegisterCreateAccount);
+
+        TextView tvBackR = findViewById(R.id.tvBackR);
+        TextView tvAccount = findViewById(R.id.tvAccount);
 
         dBhelper=new DBhelper(this);
         preferences= PreferenceManager.getDefaultSharedPreferences(this);
@@ -58,20 +62,20 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
 
-        cbShowHidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked)
-                {
-                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }
-                else
-                {
-                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
-            }
-        });
+//        cbShowHidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//                if (isChecked)
+//                {
+//                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//                }
+//                else
+//                {
+//                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//                }
+//            }
+//        });
 
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +147,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         // Optional: Show success and navigate
                         Toast.makeText(RegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                        //startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                        Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
+                        startActivity(intent);
                         finish();
                     } else {
                         Toast.makeText(RegistrationActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
@@ -156,6 +162,23 @@ public class RegistrationActivity extends AppCompatActivity {
         String fullname = etUsername.getText().toString().trim();
         editor.putString("username",fullname);
         editor.apply();
+
+
+        tvBackR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistrationActivity.this, WelcomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tvAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

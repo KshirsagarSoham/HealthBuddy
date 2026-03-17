@@ -46,7 +46,7 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@android:color/white"
+        android:background="?attr/colorSurface"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
         app:itemTextColor="@color/drawer_text_primary"

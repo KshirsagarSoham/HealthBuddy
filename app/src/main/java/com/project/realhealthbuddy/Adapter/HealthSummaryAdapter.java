@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.realhealthbuddy.BMI_Activity;
+import com.project.realhealthbuddy.MedicalAdherenceActivity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
 import com.project.realhealthbuddy.SleepActivity;
@@ -59,6 +60,10 @@ public class HealthSummaryAdapter
 
             } else if (item.type.equals(HealthSummaryItem.TYPE_STEPS)) {
                 Intent intent = new Intent(v.getContext(), StepsActivity.class);
+                v.getContext().startActivity(intent);
+
+            }else if (item.type.equals(HealthSummaryItem.TYPE_MED)) {
+                Intent intent = new Intent(v.getContext(), MedicalAdherenceActivity.class);
                 v.getContext().startActivity(intent);
 
             }

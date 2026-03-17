@@ -2,30 +2,34 @@ package com.project.realhealthbuddy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.Preference;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.project.realhealthbuddy.Fragments.HistoryFragment;
+import com.project.realhealthbuddy.Fragments.ProgressFragment;
 import com.project.realhealthbuddy.Fragments.HomeFragment;
 import com.project.realhealthbuddy.Fragments.MedicineFragment;
 import com.project.realhealthbuddy.Fragments.MeditationFragment;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.
         OnNavigationItemSelectedListener {
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        applySavedTheme();
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -70,22 +75,44 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
 
-        String fullName = preferences.getString("username", "User");
+        String fullName = preferences.getString("username", "");
 
-        String firstName = fullName;
-        if (fullName.contains(" ")) {
-            firstName = fullName.substring(0, fullName.indexOf(" "));
+        if (fullName == null || fullName.trim().isEmpty()) {
+            userName.setText("User");
+        } else {
+
+            String firstName = fullName;
+
+            if (fullName.contains(" ")) {
+                firstName = fullName.substring(0, fullName.indexOf(" "));
+            }
+
+            if (firstName.length() > 0) {
+                firstName = firstName.substring(0, 1).toUpperCase() +
+                        firstName.substring(1).toLowerCase();
+            }
+
+            userName.setText(firstName);
         }
-
-        // Capitalize first letter
-        firstName = firstName.substring(0,1).toUpperCase() +
-                firstName.substring(1).toLowerCase();
-
-        userName.setText(firstName);
         toolbar.setTitle("Zenith Health");
 
-//sidebar items clicking
+         //sidebar items clicking
 
+
+        loadSidebarProfileImage();
+
+        ImageView sidebarProfileImage = headerView.findViewById(R.id.sidebarProfileImage);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String imageUri = prefs.getString("profile_image", null);
+
+        if (imageUri != null) {
+            try {
+                Uri uri = Uri.parse(imageUri);
+                sidebarProfileImage.setImageURI(uri);
+            } catch (Exception e) {
+                sidebarProfileImage.setImageResource(R.drawable.icon_person);
+            }
+        }
 
         DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -114,24 +141,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(intent);
 
             }  else if (id == R.id.nav_privacy) {
-                Toast.makeText(MainActivity.this, "Privacy Policy clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Privacy Policy ", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, PrivacyPolicyActivity.class);
+                startActivity(intent);
 
             } else if (id == R.id.nav_about) {
                 Toast.makeText(MainActivity.this, "About App clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, AboutUsActivity.class);
+                startActivity(intent);
 
             } else if (id == R.id.nav_help) {
                 Toast.makeText(MainActivity.this, "Help & Support clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, HelpSupportActivity.class);
+                startActivity(intent);
+
 
             }  else if (id == R.id.nav_logout) {
-            // Clear SharedPreferences (Logout)
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            pref.edit().clear().apply();
 
-            // Navigate to LoginActivity
-            Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(logoutIntent);
-            finish();
-        }
+                SharedPreferences pref = PreferenceManager
+                        .getDefaultSharedPreferences(MainActivity.this);
+
+                pref.edit().putBoolean("islogin", false).apply();   // ✅ only logout
+
+                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(logoutIntent);
+                finish();
+            }
 
             // Close the drawer after selection
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -164,10 +199,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadSidebarProfileImage();
+    }
+
     HomeFragment homeFragment = new HomeFragment();
     MedicineFragment medicineFragment = new MedicineFragment();
     MeditationFragment meditationFragment = new MeditationFragment();
-    HistoryFragment historyFragment = new HistoryFragment();
+    ProgressFragment historyFragment = new ProgressFragment();
 
 
     @Override
@@ -201,15 +242,66 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==R.id.logoutMenu)
-        {
-            Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-            startActivity(intent);
-            editor.putBoolean("islogin",false).commit();
 
+        if (item.getItemId() == R.id.logoutMenu) {
+
+            editor.putBoolean("islogin", false).apply();
+
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+            finish();
+            return true;
         }
-        return true;
+
+        return super.onOptionsItemSelected(item);
     }
 
+    private void applySavedTheme() {
+
+        android.content.SharedPreferences prefs =
+                androidx.preference.PreferenceManager
+                        .getDefaultSharedPreferences(this);
+
+        String theme = prefs.getString("theme_preference", "system");
+
+        switch (theme) {
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+
+            default:
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
+    }
+
+    private void loadSidebarProfileImage() {
+
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView sidebarProfileImage = headerView.findViewById(R.id.sidebarProfileImage);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String imageUri = prefs.getString("profile_image", null);
+
+        try {
+            if (imageUri != null) {
+                sidebarProfileImage.setImageURI(Uri.parse(imageUri));
+            } else {
+                sidebarProfileImage.setImageResource(R.drawable.icon_person);
+            }
+        } catch (Exception e) {
+            sidebarProfileImage.setImageResource(R.drawable.icon_person);
+        }
+    }
 
 }

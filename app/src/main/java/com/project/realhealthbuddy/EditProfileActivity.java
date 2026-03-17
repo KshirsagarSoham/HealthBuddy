@@ -1,9 +1,12 @@
 package com.project.realhealthbuddy;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +20,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     TextInputEditText etFullName, etMobile, etEmail, etAge, etHeight, etWeight, etGender;
     Button btnSave;
+    private ImageView profileImage, btnAddPhoto;
+    private static final int PICK_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,9 @@ public class EditProfileActivity extends AppCompatActivity {
         etWeight = findViewById(R.id.etWeight);
         etGender = findViewById(R.id.etGender);
         btnSave = findViewById(R.id.btnSaveProfile);
+
+        profileImage = findViewById(R.id.profileImage);
+        btnAddPhoto = findViewById(R.id.btnAddPhoto);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         AppDatabase db = AppDatabase.getDatabase(this);
@@ -80,10 +88,49 @@ public class EditProfileActivity extends AppCompatActivity {
             setResult(RESULT_OK);
             finish();
         });
+
+
+        btnAddPhoto.setOnClickListener(v -> {
+
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setType("image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
+            startActivityForResult(intent, PICK_IMAGE);
+
+        });
+
+
     }
 
     private String getUsernameFromSharedPref() {
         return PreferenceManager.getDefaultSharedPreferences(this)
                 .getString("username", "");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
+
+            Uri imageUri = data.getData();
+
+            // Take persistent permission
+            getContentResolver().takePersistableUriPermission(
+                    imageUri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+            );
+
+            // Show image immediately
+            profileImage.setImageURI(imageUri);
+
+            // Save URI
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("profile_image", imageUri.toString());
+            editor.apply();
+        }
     }
 }

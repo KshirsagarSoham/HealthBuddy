@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="?attr/colorSurface">
 
         <!-- HEADER -->
         <LinearLayout
@@ -45,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Steps"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
@@ -56,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Track your daily steps and activity"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="center" />
@@ -79,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:background="#EDE5F4">
+                android:background="?attr/colorSurface">
+<!--                #EDE5F4-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,7 +89,7 @@
                     android:text="TODAY"
                     android:textStyle="bold"
                     android:textSize="14sp"
-                    android:textColor="#444444" />
+                    android:textColor="?attr/colorOnSurface" />
 
                 <TextView
                     android:id="@+id/tvTodaySteps"
@@ -97,7 +99,7 @@
                     android:textSize="32sp"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp"
-                    android:textColor="#000000" />
+                    android:textColor="?attr/colorOnSurface" />
 
                 <TextView
                     android:id="@+id/tvGoal"
@@ -105,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:text="Goal: 8000"
                     android:textSize="12sp"
-                    android:textColor="#666666"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp" />
 
                 <TextView
@@ -114,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:text="0%"
                     android:textSize="14sp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp"/>
 
                 <ProgressBar
@@ -126,7 +128,7 @@
                     android:max="100"
                     android:progress="0"
                     android:progressTint="#6C63FF"
-                    android:progressBackgroundTint="#E0E0E0"/>
+                    android:progressBackgroundTint="?attr/colorSurface"/>
 
 
                 <LinearLayout
@@ -143,7 +145,7 @@
                         android:layout_weight="1"
                         android:text="Distance: 0.0 km"
                         android:textSize="12sp"
-                        android:textColor="#444444" />
+                        android:textColor="?attr/colorOnSurface" />
 
                     <TextView
                         android:id="@+id/tvCalories"
@@ -152,7 +154,7 @@
                         android:layout_weight="1"
                         android:text="Calories: 0 kcal"
                         android:textSize="12sp"
-                        android:textColor="#444444"
+                        android:textColor="?attr/colorOnSurface"
                         android:gravity="end" />
                 </LinearLayout>
 
@@ -167,7 +169,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"
-            android:textColor="#000000" />
+            android:textColor="?attr/colorOnSurface" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stepsRecyclerView"
@@ -185,7 +187,7 @@
             android:textStyle="bold"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="8dp"
-            android:textColor="#000000" />
+            android:textColor="?attr/colorOnSurface" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -200,7 +202,7 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#EDE5F4">
+                app:cardBackgroundColor="?attr/colorSurface">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSetGoal"
@@ -210,7 +212,7 @@
                     android:gravity="center"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     android:background="@android:color/transparent"/>
 
             </com.google.android.material.card.MaterialCardView>
@@ -223,7 +225,7 @@
                 android:layout_columnWeight="1"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="#EDE5F4">
+                app:cardBackgroundColor="?attr/colorSurface">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -237,7 +239,7 @@
                         android:gravity="center"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/colorOnSurface"
                         android:background="@android:color/transparent"/>
 
                     <ProgressBar

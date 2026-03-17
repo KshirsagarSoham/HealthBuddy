@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="@color/white">
+        android:background="?attr/colorSurface">
 
 
         <!-- 1. HEADER -->
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sleep Summary"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginTop="12dp"
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Track your sleep for better health"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="center"/>
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="#ffffff"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardElevation="4dp">
 
             <LinearLayout
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🛏 Sleeping Time"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="14sp" />
 
                 <TextView
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-- : --"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="#ffffff"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardElevation="4dp">
 
             <LinearLayout
@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="⏰ Wake-up Time"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="14sp"
                     />
 
@@ -141,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-- : --"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
@@ -170,7 +170,7 @@
             android:layout_marginTop="24dp"
             android:visibility="gone"
             app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="#ffffff">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -183,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Sleep Duration"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="14sp" />
 
                 <TextView
@@ -191,7 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0h 0m"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="26sp"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
@@ -201,7 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="14sp"
                     android:layout_marginTop="8dp" />
 
@@ -215,7 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="#ffffff"
+            app:cardBackgroundColor="?attr/colorSurface"
             >
 
             <LinearLayout
@@ -228,14 +228,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="💡 Sleep Tip"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Adults need 7–9 hours of sleep daily"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
