@@ -8,20 +8,19 @@
     android:background="#E3F2FD"
     android:padding="16dp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/sidebarProfileImage"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:src="@drawable/icon_person"
         android:scaleType="centerCrop"
-        android:background="@drawable/circle_background"
-        android:padding="2dp" />
+        android:padding="2dp"/>
 
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ganesh Datar"
+        android:text="User Name"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="?attr/colorOnSurface"

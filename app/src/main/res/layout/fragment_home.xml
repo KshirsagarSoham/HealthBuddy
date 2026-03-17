@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/uicard_bg">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivhomeprofileimage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -39,7 +39,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="4dp"
-
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@android:color/white"
                     />
 
                 <TextView

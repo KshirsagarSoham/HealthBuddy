@@ -21,13 +21,12 @@
             android:gravity="center_horizontal"
             android:elevation="2dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/icon_person"
                 android:scaleType="centerCrop"
-                android:background="@drawable/circle_background"
                 android:elevation="4dp"
                 android:padding="2dp"/>
 
