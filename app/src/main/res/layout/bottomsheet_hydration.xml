@@ -1,0 +1,49 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stay Hydrated 💧"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set a reminder or drink water now"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btn30min"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remind me in 30 minutes"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btn1hr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remind me in 1 hour"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnDrinkNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Drink Now 🚀"
+        android:layout_marginTop="12dp"/>
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel Reminder ❌"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>

@@ -28,6 +28,8 @@ public class StepService extends Service implements SensorEventListener {
 
     private SimpleDateFormat dateFormat;
 
+    public static int CURRENT_STEPS = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,6 +41,12 @@ public class StepService extends Service implements SensorEventListener {
 
         todayDate = dateFormat.format(new Date());
         todayEntity = repository.getStepsByDate(todayDate);
+
+        if (todayEntity != null) {
+            CURRENT_STEPS = todayEntity.steps;
+        } else {
+            CURRENT_STEPS = 0;
+        }
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
@@ -126,7 +134,11 @@ public class StepService extends Service implements SensorEventListener {
 
             todayEntity.steps = todaySteps;
             repository.update(todayEntity);
+
         }
+
+        CURRENT_STEPS = todaySteps;
+
     }
 
     @Override

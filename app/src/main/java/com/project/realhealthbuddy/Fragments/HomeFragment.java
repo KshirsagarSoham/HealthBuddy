@@ -1,6 +1,7 @@
 package com.project.realhealthbuddy.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,12 +26,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.project.realhealthbuddy.Adapter.HealthSummaryAdapter;
 import com.project.realhealthbuddy.BreathingBottomSheet;
 import com.project.realhealthbuddy.HealthTipsProvider;
+import com.project.realhealthbuddy.HydrationBottomSheet;
 import com.project.realhealthbuddy.MainActivity;
 import com.project.realhealthbuddy.Model.HealthSummaryItem;
 import com.project.realhealthbuddy.R;
 import com.project.realhealthbuddy.SleepBottomSheet;
 import com.project.realhealthbuddy.Steps.Data.StepsEntity;
 import com.project.realhealthbuddy.Steps.Repository.StepsRepository;
+import com.project.realhealthbuddy.WalkBottomSheet;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -292,19 +295,31 @@ public class HomeFragment extends Fragment {
         });
 
         walk.setOnClickListener(v -> {
-            Snackbar.make(v,
-                            "🚶 Take a 5–10 minute walk today",
-                            Snackbar.LENGTH_LONG)
-                    .setAction("Done", snack -> {
-                        // Optional future logic
-                    })
-                    .show();
+
+            // 🔥 Ensure StepService is running
+            Intent intent = new Intent(getContext(), com.project.realhealthbuddy.Steps.StepService.class);
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                requireContext().startForegroundService(intent);
+            } else {
+                requireContext().startService(intent);
+            }
+
+            // Small delay to let service initialize
+            new android.os.Handler().postDelayed(() -> {
+                WalkBottomSheet sheet = new WalkBottomSheet();
+                sheet.show(getParentFragmentManager(), "WalkSheet");
+            }, 1000); // 1 second delay
         });
 
         water.setOnClickListener(v -> {
             Toast.makeText(requireContext(),
                     "💧 Drink a glass of water",
                     Toast.LENGTH_SHORT).show();
+
+            HydrationBottomSheet sheet = new HydrationBottomSheet();
+            sheet.show(getParentFragmentManager(), "HydrationSheet");
+
         });
 
 //=====================================================================================================================
