@@ -31,6 +31,10 @@ public class StepsRepository {
         executorService.execute(() -> stepsDao.update(entity));
     }
 
+    public List<StepsEntity> getLast7DaysWithDays() {
+        return stepsDao.getLast7Days();
+    }
+
     // Get record by date (synchronous for now because allowMainThreadQueries is enabled)
     public StepsEntity getStepsByDate(String date) {
         return stepsDao.getStepsByDate(date);

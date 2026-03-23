@@ -1,131 +1,272 @@
 package com.project.realhealthbuddy.Fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
-
 import com.project.realhealthbuddy.R;
+import com.project.realhealthbuddy.Steps.Data.StepsEntity;
+import com.project.realhealthbuddy.Model.Medicine;
+import com.project.realhealthbuddy.Steps.Repository.HealthRepository;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class ProgressFragment extends Fragment {
-    private TextView tvStepsToday, tvDailyGoal, tvMedicineMorning, tvMedicineLunch;
-    private ProgressBar pbSteps;
-    private LinearLayout dayProgressContainer;  // ← ADDED: For 7-day bars
-    private SharedPreferences prefs;
+    private HealthRepository repository;
+    private LinearLayout stepsContainer, medicineContainer;
+    private TextView tvTodaySteps, tvWeeklyGoal, tvTodayTaken, tvDate;
+    private ProgressBar pbWeeklyProgress;
+    SharedPreferences preferences;
+    private String todayDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_progress, container, false);
         initViews(view);
-        loadDynamicData();
-        loadWeeklyData();  // ← ADDED: Load 7-day data
-        animateEntrance();
+
+        loadData();
         return view;
     }
 
     private void initViews(View view) {
-        tvStepsToday = view.findViewById(R.id.tv_steps_today);
-        tvDailyGoal = view.findViewById(R.id.tv_daily_goal);
-        pbSteps = view.findViewById(R.id.pb_steps);
-        tvMedicineMorning = view.findViewById(R.id.tv_medicine_morning);
-        tvMedicineLunch = view.findViewById(R.id.tv_medicine_lunch);
-        dayProgressContainer = view.findViewById(R.id.day_progress_container);  // ← ADDED
-        prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        stepsContainer = view.findViewById(R.id.steps_container);
+        medicineContainer = view.findViewById(R.id.medicine_container);
+        tvTodaySteps = view.findViewById(R.id.tv_today_steps);
+        tvWeeklyGoal = view.findViewById(R.id.tv_weekly_goal);
+        tvTodayTaken = view.findViewById(R.id.tv_today_taken);
+        tvDate = view.findViewById(R.id.tv_date);
+        pbWeeklyProgress = view.findViewById(R.id.pb_weekly_progress);
     }
 
-    private void loadDynamicData() {
-        int stepsToday = prefs.getInt("steps_today", 8200);
-        int dailyGoal = 10000;
-        tvStepsToday.setText(String.valueOf(stepsToday));
-        tvDailyGoal.setText("Daily Goal: " + dailyGoal);
+    private void loadData() {
+        repository = new HealthRepository(requireContext());
+        todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        tvDate.setText(new SimpleDateFormat("EEEE, MMM dd", Locale.getDefault()).format(new Date()));
 
-        int progress = (int) ((stepsToday * 100f) / dailyGoal);
-        pbSteps.setProgress(progress);
-        pbSteps.setMax(100);
+        // Load Steps (from your StepsActivity Room DB)
+        new Thread(() -> {
+            List<StepsEntity> last7Days = repository.getLast7Days();
+            StepsEntity todaySteps = repository.getTodaySteps(todayDate);
 
-        updateMedicineStatus("morning_pill", tvMedicineMorning, "Morning Pill (8:00 AM)");
-        updateMedicineStatus("lunch_supplement", tvMedicineLunch, "Lunch Supplement (1:00 PM)");
+            requireActivity().runOnUiThread(() -> {
+                tvTodaySteps.setText(todaySteps != null ? String.valueOf(todaySteps.steps) : "0");
+                loadWeeklySteps(last7Days);
+                updateWeeklyProgress(last7Days);
+            });
+        }).start();
+
+        // Load Medicines (from MedicineFragment SharedPreferences)
+        List<Medicine> medicines = repository.getTodayMedicines(requireContext());
+        loadMedicines(medicines);
     }
 
-    // ← ADDED: Dynamic 7-day progress bars (matches your screenshot)
-    private void loadWeeklyData() {
-        dayProgressContainer.removeAllViews();
-        int[] weeklySteps = {7300, 4200, 9800, 3500, 4900, 7200, 8200};
-        String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Today"};
+    private void loadWeeklySteps(List<StepsEntity> dbSteps) {
+        stepsContainer.removeAllViews();
 
-        for (int i = 0; i < weeklySteps.length; i++) {
-            createDayProgressBar(days[i], weeklySteps[i]);
+//        // Get TODAY first, then show last 6 days + next day (always 7 columns)
+//        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+   Calendar cal = Calendar.getInstance();
+//        try {
+//            cal.setTimeInMillis(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(today).getTime());
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        // Create map for quick lookup
+//        java.util.Map<String, Integer> stepsMap = new java.util.HashMap<>();
+//        for (StepsEntity step : dbSteps) {
+//            stepsMap.put(step.date, step.steps);
+//        }
+        android.util.Log.d("Progress", "DB Steps dates: " + dbSteps.size() + " records");
+        for (StepsEntity step : dbSteps) {
+            android.util.Log.d("Progress", "DB date: " + step.date + " = " + step.steps + " steps");
+        }
+        android.util.Log.d("Progress", "Today: " + todayDate);
+
+        // Create map for quick lookup
+        java.util.Map<String, Integer> stepsMap = new java.util.HashMap<>();
+        for (StepsEntity step : dbSteps) {
+            stepsMap.put(step.date, step.steps);
+        }
+
+        // Show: 3 days ago, 2 days ago, 1 day ago, TODAY, tomorrow, +2 days, +3 days
+        for (int offset = -3; offset <= 3; offset++) {
+            Calendar dayCal = (Calendar) cal.clone();
+            dayCal.add(Calendar.DAY_OF_MONTH, offset);
+            String dayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(dayCal.getTime());
+            String dayName = new SimpleDateFormat("EEE", Locale.getDefault()).format(dayCal.getTime());
+            int steps = stepsMap.containsKey(dayDate) ? stepsMap.get(dayDate) : 0;
+
+            boolean isToday = offset == 0;
+            createStepsColumn(dayDate, dayName, steps, isToday);
         }
     }
 
-    // ← ADDED: Creates each day's progress bar
-    private void createDayProgressBar(String day, int steps) {
-        LinearLayout dayLayout = new LinearLayout(requireContext());
-        dayLayout.setOrientation(LinearLayout.VERTICAL);
-        dayLayout.setPadding(0, 8, 0, 8);
+    private void createStepsColumn(String date, String dayName, int steps, boolean isToday) {
+        LinearLayout column = new LinearLayout(requireContext());
+        column.setOrientation(LinearLayout.VERTICAL);
+        column.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        column.setPadding(12, 12, 12, 12);
 
-        // Progress bar
+        if (isToday) {
+            column.setBackground(getResources().getDrawable(R.drawable.bg_today_highlight, null));
+        }
+
+        // Progress Bar (0-10000 max)
         ProgressBar pb = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
         pb.setMax(10000);
         pb.setProgress(steps);
-        pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_green_light));
-        LinearLayout.LayoutParams pbParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, 12);
-        pb.setLayoutParams(pbParams);
 
-        // Day label
-        TextView tv = new TextView(requireContext());
-        tv.setText(day + ": " + steps);
-        tv.setTextColor(getResources().getColor(android.R.color.white));
-        tv.setTextSize(14);
-        tv.setPadding(0, 4, 0, 0);
-        LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        tv.setLayoutParams(tvParams);
+        // Color based on progress
+        if (steps >= 8000) {
+            pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_green_light));
+        } else if (steps >= 5000) {
+            pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_orange_light));
+        } else {
+            pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_red_light));
+        }
 
-        dayLayout.addView(pb);
-        dayLayout.addView(tv);
-        dayProgressContainer.addView(dayLayout);
+        pb.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));
+
+        // Steps Count
+        TextView stepsTv = new TextView(requireContext());
+        stepsTv.setText(String.valueOf(steps));
+        stepsTv.setTextColor(isToday ?
+                getResources().getColor(android.R.color.black) :
+                getResources().getColor(android.R.color.white));
+        stepsTv.setTextSize(16);
+        stepsTv.setTypeface(null, isToday ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
+        stepsTv.setGravity(android.view.Gravity.CENTER);
+
+        // Day Name
+        TextView dayTv = new TextView(requireContext());
+        dayTv.setText(dayName);
+        dayTv.setTextColor(isToday ?
+                getResources().getColor(android.R.color.black) :
+                getResources().getColor(android.R.color.white));
+        dayTv.setTextSize(14);
+        dayTv.setTypeface(null, isToday ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
+        dayTv.setGravity(android.view.Gravity.CENTER);
+
+        column.addView(pb);
+        column.addView(stepsTv);
+        dayTv.setGravity(android.view.Gravity.CENTER);
+        column.addView(dayTv);
+        stepsContainer.addView(column);
     }
 
-    private void updateMedicineStatus(String key, TextView tv, String label) {
-        boolean taken = prefs.getBoolean(key, false);
-        tv.setText(label + (taken ? " ✓" : " ⏳"));
-        tv.setBackgroundResource(taken ? R.drawable.bg_medicine_taken : R.drawable.bg_medicine_pending);
+    private void updateWeeklyProgress(List<StepsEntity> steps) {
+        int totalSteps = 0;
+        for (StepsEntity step : steps) {
+            totalSteps += step.steps;
+        }
+        int maxSteps = 7 * 10000;  // Always 70K for 7 days
+        pbWeeklyProgress.setMax(maxSteps);
+        pbWeeklyProgress.setProgress(totalSteps);
+        tvWeeklyGoal.setText("Weekly Goal: 70K steps");
     }
 
-    private void animateEntrance() {
-        // Pulse animation for steps circle (no Lottie needed)
-        ValueAnimator pulse = ValueAnimator.ofFloat(0.95f, 1.05f);
-        pulse.setDuration(1200);
-        pulse.setRepeatCount(ValueAnimator.INFINITE);
-        pulse.setRepeatMode(ValueAnimator.REVERSE);
-        pulse.addUpdateListener(animation -> {
-            float scale = (float) animation.getAnimatedValue();
-            pbSteps.setScaleX(scale);
-            pbSteps.setScaleY(scale);
-        });
-        pulse.start();
+    private void createStepsColumn(StepsEntity step, String dayName) {
+        LinearLayout column = new LinearLayout(requireContext());
+        column.setOrientation(LinearLayout.VERTICAL);
+        column.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        column.setPadding(8, 8, 8, 8);
 
-        // Fade in
-        tvStepsToday.setAlpha(0f);
-        tvStepsToday.animate().alpha(1f).setDuration(800).start();
+        int goal= 300;
+        // Progress Bar
+        ProgressBar pb = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
+        pb.setMax(goal);
+        pb.setProgress(step.steps);
+        pb.setProgressTintList(getResources().getColorStateList(R.color.purple));
+        pb.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 60));
+
+        // Steps Count
+        TextView stepsTv = new TextView(requireContext());
+        stepsTv.setText(String.valueOf(step.steps));
+        stepsTv.setTextColor(getResources().getColor(android.R.color.white));
+        stepsTv.setTextSize(14);
+        stepsTv.setTypeface(null, android.graphics.Typeface.BOLD);
+        stepsTv.setGravity(android.view.Gravity.CENTER);
+
+        // Day Name
+        TextView dayTv = new TextView(requireContext());
+        dayTv.setText(dayName);
+        dayTv.setTextColor(getResources().getColor(android.R.color.white));
+        dayTv.setTextSize(12);
+        dayTv.setGravity(android.view.Gravity.CENTER);
+
+        column.addView(pb);
+        column.addView(stepsTv);
+        column.addView(dayTv);
+        stepsContainer.addView(column);
     }
 
-    public void updateSteps(int newSteps) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("steps_today", newSteps);
-        editor.apply();
-        loadDynamicData();
-        loadWeeklyData();  // Refresh weekly too
+    private void loadMedicines(List<Medicine> medicines) {
+        medicineContainer.removeAllViews();
+        int takenCount = 0, totalDoses = 0;
+
+        for (Medicine medicine : medicines) {
+            totalDoses += medicine.getTimings().size();
+            takenCount += medicine.getTakenCount();
+            createMedicineItem(medicine);
+        }
+        tvTodayTaken.setText("Today: " + takenCount + "/" + totalDoses + " taken");
     }
+
+    private void createMedicineItem(Medicine medicine) {
+        LinearLayout item = new LinearLayout(requireContext());
+        item.setOrientation(LinearLayout.HORIZONTAL);
+        item.setPadding(20, 16, 20, 16);
+        item.setBackgroundResource(R.drawable.bg_medicine_pending);
+
+        // Icon
+        ImageView icon = new ImageView(requireContext());
+        icon.setImageResource(android.R.drawable.ic_menu_info_details);
+        icon.setColorFilter(getResources().getColor(android.R.color.white));
+        icon.setLayoutParams(new LinearLayout.LayoutParams(48, 48));
+
+        // Details
+        LinearLayout details = new LinearLayout(requireContext());
+        details.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams detailsParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+
+        TextView nameTv = new TextView(requireContext());
+        nameTv.setText(medicine.getName() + " (" + medicine.getDosage() + ")");
+        nameTv.setTextColor(getResources().getColor(android.R.color.white));
+        nameTv.setTextSize(16);
+        nameTv.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        TextView timingsTv = new TextView(requireContext());
+        StringBuilder timings = new StringBuilder();
+        for (int i = 0; i < Math.min(medicine.getTimings().size(), 2); i++) {
+            timings.append(medicine.getTimings().get(i));
+            if (i < medicine.getTimings().size() - 1) timings.append(", ");
+        }
+        if (medicine.getTimings().size() > 2) timings.append("...");
+        timingsTv.setText(timings.toString());
+        timingsTv.setTextColor(getResources().getColorStateList(android.R.color.darker_gray));
+        timingsTv.setTextSize(14);
+
+        details.addView(nameTv);
+        details.addView(timingsTv);
+        details.setLayoutParams(detailsParams);
+
+        item.addView(icon);
+        item.addView(details);
+        medicineContainer.addView(item);
+    }
+
+
 }

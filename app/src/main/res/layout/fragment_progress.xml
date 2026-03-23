@@ -11,158 +11,137 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Health &amp; Wellness"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginBottom="32dp"
-            android:gravity="center" />
-
-        <!-- 7-Day Steps - Simple Progress Bars -->
+        <!-- Steps Section -->
         <LinearLayout
-            android:id="@+id/weekly_steps_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_step_card"
-            android:padding="20dp"
+            android:padding="24dp"
             android:layout_marginBottom="32dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LAST 7 DAYS STEPS"
-                android:textSize="18sp"
+                android:text="Last 7 Days Steps Count"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="20dp" />
 
-            <!-- Dynamic progress bars populated in Java -->
-            <LinearLayout
-                android:id="@+id/day_progress_container"
+            <ProgressBar
+                android:id="@+id/pb_weekly_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:id="@+id/tv_weekly_goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10sp"
-                android:orientation="vertical" />
+                android:text="Weekly Goal:  30k steps"
+                android:textColor="@color/white_80"
+                android:textSize="16sp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- 7 Columns for Days -->
+            <LinearLayout
+                android:id="@+id/steps_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
         </LinearLayout>
 
-        <!-- Steps Progress Circle -->
+        <!-- Today Steps -->
+        <!--        <TextView-->
+        <!--           -->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="8,550"-->
+        <!--            android:textSize="48sp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginBottom="32dp" />-->
+        <!--        -->
+
+        <!-- Medicine Section -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="228dp"
-            android:layout_marginBottom="40dp"
+            android:layout_width="163dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle_steps"
             android:gravity="center"
+            android:layout_marginLeft="84sp"
+            android:layout_marginBottom="20sp"
             android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
+
+            <ImageView
                 android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="80dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@color/purple_500"
-                app:strokeWidth="4dp">
+                android:layout_height="47dp"
+                android:layout_marginBottom="1dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/step2"
+                app:tint="@color/white" />
 
-                <LinearLayout
-                    android:layout_width="163dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_circle_steps"
-                    android:gravity="center"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_today_steps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8200"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
-                    <!-- ✅ REPLACED Lottie with ImageView -->
 
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="47dp"
-                        android:layout_marginBottom="1dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/step2"
-                        android:tint="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_steps_today"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="8200"
-                        android:textColor="@color/white"
-                        android:textSize="32sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_daily_goal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Goal 10,000 steps"
-                        android:textColor="@color/white_80"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Secondary Progress Bar -->
-            <ProgressBar
-                android:id="@+id/pb_steps"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="206dp"
-                android:layout_height="26dp"
-                android:backgroundTint="@color/white_20"
-                android:max="100"
-                android:progress="82"
-                android:progressTint="@color/purple_500" />
 
         </LinearLayout>
-
-        <!-- Medicine Intake -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Medicine Intake Today"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginBottom="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="16dp">
+            android:background="@drawable/bg_medicine_taken"
+            android:padding="24dp">
 
             <TextView
-                android:id="@+id/tv_medicine_morning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Morning Pill (8:00 AM) ✓"
-                android:textSize="16sp"
-                android:padding="16dp"
-                android:background="@drawable/bg_medicine_taken"
-                android:layout_marginBottom="8dp" />
+                android:text="Medication Intake"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginBottom="16dp" />
 
             <TextView
-                android:id="@+id/tv_medicine_lunch"
+                android:id="@+id/tv_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lunch Supplement (1:00 PM) ⏳"
-                android:textSize="16sp"
-                android:padding="16dp"
-                android:background="@drawable/bg_medicine_pending" />
+                android:text="Wednesday, Mar 11"
+                android:textColor="@color/white_80"
+                android:textSize="18sp"
+                android:layout_marginBottom="24dp" />
+
+            <LinearLayout
+                android:id="@+id/medicine_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_today_taken"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Today: 2/4 taken"
+                android:textColor="@color/purple"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="20dp" />
 
         </LinearLayout>
-
-        <!-- ✅ REPLACED Lottie medicine with simple icon -->
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:src="@android:drawable/stat_notify_sync"
-            android:tint="#4CAF50"
-            android:scaleType="centerInside" />
 
     </LinearLayout>
 </ScrollView>
