@@ -1,6 +1,7 @@
 package com.project.realhealthbuddy.Steps.Repository;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.project.realhealthbuddy.Steps.Data.StepsDao;
 import com.project.realhealthbuddy.Steps.Data.StepsEntity;
@@ -11,6 +12,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class StepsRepository {
+
+
+    // Get user's daily goal from SharedPreferences
+        public int getDailyGoal(Context context) {
+            SharedPreferences prefs = context.getSharedPreferences("steps_prefs", Context.MODE_PRIVATE);
+            return prefs.getInt("step_goal", 8000);  // Default 8K
+        }
+
 
     private final StepsDao stepsDao;
     private final ExecutorService executorService;
@@ -40,8 +49,15 @@ public class StepsRepository {
         return stepsDao.getStepsByDate(date);
     }
 
-    // Get last 7 days
-    public List<StepsEntity> getLast7Days() {
-        return stepsDao.getLast7Days();
-    }
+
+        // Return exactly 7 days (pad with zeros if needed)
+        public List<StepsEntity> getLast7Days() {
+            List<StepsEntity> steps = stepsDao.getLast7Days();
+            // Pad to 7 if less
+            while (steps.size() < 7) {
+                steps.add(new StepsEntity("", 0, 0));
+            }
+            return steps;
+        }
+
 }

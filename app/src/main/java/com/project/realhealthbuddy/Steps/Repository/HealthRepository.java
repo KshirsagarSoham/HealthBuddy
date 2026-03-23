@@ -11,11 +11,20 @@ import com.project.realhealthbuddy.Model.Medicine;
 import java.util.List;
 
 public class HealthRepository {
-    private StepsRepository stepsRepository;
 
-    public HealthRepository(Context context) {
-        stepsRepository = new StepsRepository(context);
-    }
+        private StepsRepository stepsRepository;
+
+        public HealthRepository(Context context) {
+            stepsRepository = new StepsRepository(context);
+        }
+
+        public int getDailyGoal(Context context) {
+            return stepsRepository.getDailyGoal(context);
+        }
+
+
+//    private StepsRepository stepsRepository;
+
 
     public List<StepsEntity> getLast7Days() {
         return stepsRepository.getLast7Days();  // Your existing method

@@ -75,44 +75,76 @@ public class ProgressFragment extends Fragment {
     private void loadWeeklySteps(List<StepsEntity> dbSteps) {
         stepsContainer.removeAllViews();
 
-//        // Get TODAY first, then show last 6 days + next day (always 7 columns)
-//        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-   Calendar cal = Calendar.getInstance();
-//        try {
-//            cal.setTimeInMillis(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(today).getTime());
-//        } catch (ParseException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        // Create map for quick lookup
-//        java.util.Map<String, Integer> stepsMap = new java.util.HashMap<>();
-//        for (StepsEntity step : dbSteps) {
-//            stepsMap.put(step.date, step.steps);
-//        }
-        android.util.Log.d("Progress", "DB Steps dates: " + dbSteps.size() + " records");
-        for (StepsEntity step : dbSteps) {
-            android.util.Log.d("Progress", "DB date: " + step.date + " = " + step.steps + " steps");
-        }
-        android.util.Log.d("Progress", "Today: " + todayDate);
-
-        // Create map for quick lookup
+        // Create map of your DB steps (date → steps)
         java.util.Map<String, Integer> stepsMap = new java.util.HashMap<>();
         for (StepsEntity step : dbSteps) {
             stepsMap.put(step.date, step.steps);
         }
 
-        // Show: 3 days ago, 2 days ago, 1 day ago, TODAY, tomorrow, +2 days, +3 days
-        for (int offset = -3; offset <= 3; offset++) {
+        // Get today for highlighting
+        String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        // Start from Sunday of CURRENT WEEK
+        Calendar cal = Calendar.getInstance();
+        cal.setFirstDayOfWeek(Calendar.SUNDAY);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+        // Generate 7 days: Sun→Sat with YOUR real data
+        for (int i = 0; i < 7; i++) {
             Calendar dayCal = (Calendar) cal.clone();
-            dayCal.add(Calendar.DAY_OF_MONTH, offset);
             String dayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(dayCal.getTime());
             String dayName = new SimpleDateFormat("EEE", Locale.getDefault()).format(dayCal.getTime());
             int steps = stepsMap.containsKey(dayDate) ? stepsMap.get(dayDate) : 0;
+            boolean isToday = dayDate.equals(todayDate);
 
-            boolean isToday = offset == 0;
             createStepsColumn(dayDate, dayName, steps, isToday);
+            cal.add(Calendar.DAY_OF_MONTH, 1);
         }
     }
+
+//    private void createStepsColumn(String date, String dayName, int steps, boolean isToday) {
+//        LinearLayout column = new LinearLayout(requireContext());
+//        column.setOrientation(LinearLayout.VERTICAL);
+//        column.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+//        column.setPadding(12, 12, 12, 12);
+//
+//        if (isToday) {
+//            column.setBackground(getResources().getDrawable(R.drawable.bg_today_highlight));
+//        }
+//
+//        // Progress bar (10K max)
+//        ProgressBar pb = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
+//        pb.setMax(10000);
+//        pb.setProgress(steps);
+//        pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_green_light));
+//        pb.setBackgroundTintList(getResources().getColorStateList(android.R.color.darker_gray));
+//        pb.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));
+//
+//        // Steps count
+//        TextView stepsTv = new TextView(requireContext());
+//        stepsTv.setText(String.valueOf(steps));
+//        stepsTv.setTextColor(isToday ?
+//                getResources().getColor(android.R.color.black) :
+//                getResources().getColor(android.R.color.white));
+//        stepsTv.setTextSize(16);
+//        stepsTv.setTypeface(null, isToday ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
+//        stepsTv.setGravity(android.view.Gravity.CENTER);
+//
+//        // Day name
+//        TextView dayTv = new TextView(requireContext());
+//        dayTv.setText(dayName);
+//        dayTv.setTextColor(isToday ?
+//                getResources().getColor(android.R.color.black) :
+//                getResources().getColor(android.R.color.white));
+//        dayTv.setTextSize(14);
+//        dayTv.setTypeface(null, isToday ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
+//        dayTv.setGravity(android.view.Gravity.CENTER);
+//
+//        column.addView(pb);
+//        column.addView(stepsTv);
+//        column.addView(dayTv);
+//        stepsContainer.addView(column);
+//    }
 
     private void createStepsColumn(String date, String dayName, int steps, boolean isToday) {
         LinearLayout column = new LinearLayout(requireContext());
@@ -126,13 +158,16 @@ public class ProgressFragment extends Fragment {
 
         // Progress Bar (0-10000 max)
         ProgressBar pb = new ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal);
-        pb.setMax(10000);
+
+        int dailygoal =repository.getDailyGoal(requireContext());
+//        int maxSteps = 7 * dailygoal;  // Always 70K for 7 days
+        pb.setMax(dailygoal);
         pb.setProgress(steps);
 
         // Color based on progress
-        if (steps >= 8000) {
+        if (steps >= steps*85/100) {
             pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_green_light));
-        } else if (steps >= 5000) {
+        } else if (steps >= steps*50/100) {
             pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_orange_light));
         } else {
             pb.setProgressTintList(getResources().getColorStateList(android.R.color.holo_red_light));
@@ -144,8 +179,8 @@ public class ProgressFragment extends Fragment {
         TextView stepsTv = new TextView(requireContext());
         stepsTv.setText(String.valueOf(steps));
         stepsTv.setTextColor(isToday ?
-                getResources().getColor(android.R.color.black) :
-                getResources().getColor(android.R.color.white));
+                getResources().getColor(android.R.color.holo_purple) :
+                getResources().getColor(android.R.color.darker_gray));
         stepsTv.setTextSize(16);
         stepsTv.setTypeface(null, isToday ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
         stepsTv.setGravity(android.view.Gravity.CENTER);
@@ -154,8 +189,8 @@ public class ProgressFragment extends Fragment {
         TextView dayTv = new TextView(requireContext());
         dayTv.setText(dayName);
         dayTv.setTextColor(isToday ?
-                getResources().getColor(android.R.color.black) :
-                getResources().getColor(android.R.color.white));
+                getResources().getColor(android.R.color.holo_purple) :
+                getResources().getColor(android.R.color.darker_gray));
         dayTv.setTextSize(14);
         dayTv.setTypeface(null, isToday ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
         dayTv.setGravity(android.view.Gravity.CENTER);
@@ -172,10 +207,12 @@ public class ProgressFragment extends Fragment {
         for (StepsEntity step : steps) {
             totalSteps += step.steps;
         }
-        int maxSteps = 7 * 10000;  // Always 70K for 7 days
+        int dailygoal =repository.getDailyGoal(requireContext());
+
+        int maxSteps = 7 * dailygoal;  // Always 70K for 7 days
         pbWeeklyProgress.setMax(maxSteps);
         pbWeeklyProgress.setProgress(totalSteps);
-        tvWeeklyGoal.setText("Weekly Goal: 70K steps");
+        tvWeeklyGoal.setText("Weekly Goal: "+maxSteps+" steps");
     }
 
     private void createStepsColumn(StepsEntity step, String dayName) {
