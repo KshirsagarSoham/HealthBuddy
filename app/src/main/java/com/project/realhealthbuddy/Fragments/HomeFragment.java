@@ -149,6 +149,8 @@ public class HomeFragment extends Fragment {
 
         mcvMeditation.setOnClickListener(v -> navigateToTab(R.id.homebottommenuMeditation));
 
+        mcvProgress.setOnClickListener(v -> navigateToTab(R.id.homebottommenuprogress));
+
 
 //================================================================================================================
 
